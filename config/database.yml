@@ -9,12 +9,12 @@ default: &default
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  username: root
-  password: lalili1005
   socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
+  username: root
+  password: 
   database: VeNJOB_development
 
 # Warning: The database defined as "test" will be erased and

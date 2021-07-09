@@ -14,30 +14,30 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
 
   create_table "apply_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "jobs_id", null: false
+    t.bigint "job_id", null: false
     t.binary "cv"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["jobs_id"], name: "index_apply_jobs_on_jobs_id"
+    t.index ["job_id"], name: "index_apply_jobs_on_job_id"
     t.index ["user_id"], name: "index_apply_jobs_on_user_id"
   end
 
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "regions_id", null: false
+    t.bigint "region_id", null: false
     t.string "name"
     t.string "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["regions_id"], name: "index_cities_on_regions_id"
+    t.index ["region_id"], name: "index_cities_on_region_id"
   end
 
   create_table "cities_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "cities_id", null: false
-    t.bigint "jobs_id", null: false
+    t.bigint "city_id", null: false
+    t.bigint "job_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["cities_id"], name: "index_cities_jobs_on_cities_id"
-    t.index ["jobs_id"], name: "index_cities_jobs_on_jobs_id"
+    t.index ["city_id"], name: "index_cities_jobs_on_city_id"
+    t.index ["job_id"], name: "index_cities_jobs_on_job_id"
   end
 
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -52,29 +52,29 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
   end
 
   create_table "companies_cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "companies_id", null: false
-    t.bigint "cities_id", null: false
+    t.bigint "companie_id", null: false
+    t.bigint "city_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["cities_id"], name: "index_companies_cities_on_cities_id"
-    t.index ["companies_id"], name: "index_companies_cities_on_companies_id"
+    t.index ["city_id"], name: "index_companies_cities_on_city_id"
+    t.index ["companie_id"], name: "index_companies_cities_on_companie_id"
   end
 
   create_table "favorite_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "jobs_id", null: false
+    t.bigint "job_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["jobs_id"], name: "index_favorite_jobs_on_jobs_id"
+    t.index ["job_id"], name: "index_favorite_jobs_on_job_id"
     t.index ["user_id"], name: "index_favorite_jobs_on_user_id"
   end
 
   create_table "history_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "jobs_id", null: false
+    t.bigint "job_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["jobs_id"], name: "index_history_jobs_on_jobs_id"
+    t.index ["job_id"], name: "index_history_jobs_on_job_id"
     t.index ["user_id"], name: "index_history_jobs_on_user_id"
   end
 
@@ -85,16 +85,16 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
   end
 
   create_table "industries_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "jobs_id", null: false
-    t.bigint "industries_id", null: false
+    t.bigint "industry_id", null: false
+    t.bigint "job_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["industries_id"], name: "index_industries_jobs_on_industries_id"
-    t.index ["jobs_id"], name: "index_industries_jobs_on_jobs_id"
+    t.index ["industry_id"], name: "index_industries_jobs_on_industry_id"
+    t.index ["job_id"], name: "index_industries_jobs_on_job_id"
   end
 
   create_table "jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "companies_id", null: false
+    t.bigint "company_id", null: false
     t.string "title"
     t.text "overview"
     t.text "requirement"
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
     t.datetime "expired_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["companies_id"], name: "index_jobs_on_companies_id"
+    t.index ["company_id"], name: "index_jobs_on_company_id"
   end
 
   create_table "regions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -125,18 +125,18 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "apply_jobs", "jobs", column: "jobs_id"
+  add_foreign_key "apply_jobs", "jobs"
   add_foreign_key "apply_jobs", "users"
-  add_foreign_key "cities", "regions", column: "regions_id"
-  add_foreign_key "cities_jobs", "cities", column: "cities_id"
-  add_foreign_key "cities_jobs", "jobs", column: "jobs_id"
-  add_foreign_key "companies_cities", "cities", column: "cities_id"
-  add_foreign_key "companies_cities", "companies", column: "companies_id"
-  add_foreign_key "favorite_jobs", "jobs", column: "jobs_id"
+  add_foreign_key "cities", "regions"
+  add_foreign_key "cities_jobs", "cities"
+  add_foreign_key "cities_jobs", "jobs"
+  add_foreign_key "companies_cities", "cities"
+  add_foreign_key "companies_cities", "companies", column: "companie_id"
+  add_foreign_key "favorite_jobs", "jobs"
   add_foreign_key "favorite_jobs", "users"
-  add_foreign_key "history_jobs", "jobs", column: "jobs_id"
+  add_foreign_key "history_jobs", "jobs"
   add_foreign_key "history_jobs", "users"
-  add_foreign_key "industries_jobs", "industries", column: "industries_id"
-  add_foreign_key "industries_jobs", "jobs", column: "jobs_id"
-  add_foreign_key "jobs", "companies", column: "companies_id"
+  add_foreign_key "industries_jobs", "industries"
+  add_foreign_key "industries_jobs", "jobs"
+  add_foreign_key "jobs", "companies"
 end
