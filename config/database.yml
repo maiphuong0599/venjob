@@ -14,7 +14,7 @@ default: &default
 development:
   <<: *default
   username: root
-  password: 
+  password: lalili1005
   database: VeNJOB_development
 
 production:
