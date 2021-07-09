@@ -52,12 +52,12 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
   end
 
   create_table "companies_cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "companie_id", null: false
+    t.bigint "company_id", null: false
     t.bigint "city_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["city_id"], name: "index_companies_cities_on_city_id"
-    t.index ["companie_id"], name: "index_companies_cities_on_companie_id"
+    t.index ["company_id"], name: "index_companies_cities_on_company_id"
   end
 
   create_table "favorite_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
   add_foreign_key "cities_jobs", "cities"
   add_foreign_key "cities_jobs", "jobs"
   add_foreign_key "companies_cities", "cities"
-  add_foreign_key "companies_cities", "companies", column: "companie_id"
+  add_foreign_key "companies_cities", "companies"
   add_foreign_key "favorite_jobs", "jobs"
   add_foreign_key "favorite_jobs", "users"
   add_foreign_key "history_jobs", "jobs"
