@@ -1,5 +1,5 @@
 class City < ApplicationRecord
+  belongs_to :regions
   has_and_belongs_to_many :jobs
   has_and_belongs_to_many :companies
-  has_many :regions
 end

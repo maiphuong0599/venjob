@@ -1,8 +1,8 @@
 class Job < ApplicationRecord
-  has_and_belongs_to_many :users
+  belongs_to :companies
+  has_many :apply_jobs
+  has_many :favorite_jobs
+  has_many :history_jobs
   has_and_belongs_to_many :industries
   has_and_belongs_to_many :cities
-  has_many :applies_jobs
-  has_many :users, through: :applies_jobs
-  belongs_to :company
 end
