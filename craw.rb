@@ -21,21 +21,30 @@ def scraper
     pagination_url = pagination_job_listing.css('a')[1].attributes["href"].value
     pagination_detail_url = Nokogiri::HTML(URI.open(pagination_url))
     pagination_detail_job = pagination_detail_url.css('div.container')
-      job = {
-        title: pagination_detail_job.css('div.job-desc h1.title')[0].text,
-        company: pagination_detail_job.css('div.job-desc a')[0].text,
-        salary: pagination_detail_job.css('div.detail-box.has-background ul li p')[3].text,
-        type: pagination_detail_job.css('div.detail-box.has-background ul li p')[2].text,
-        experience: pagination_detail_job.css('div.detail-box.has-background ul li p')[4].text.gsub("\r\n", "").strip,
-        level: pagination_detail_job.css('div.detail-box.has-background ul li p')[5].text,
-        expired_at: pagination_detail_job.css('div.detail-box.has-background ul li p')[6].text,
-        benefits: pagination_detail_job.css('div.detail-row')[0].text.gsub("\r\n", "").strip,
-        overview: pagination_detail_job.css('div.detail-row')[1].text.gsub("\r\n", "").strip,
-        requirement: pagination_detail_job.css('div.detail-row')[2].text.gsub("\r\n", "").strip,
-        other_requirement: pagination_detail_job.css('div.detail-row')[2].text.gsub(/\s+/, " ")
-        }
+    
+        title = pagination_detail_job.css('div.job-desc h1.title')[0].text,
+        company = pagination_detail_job.css('div.job-desc a.employer.job-company-name')[0].text,
+        class_value = pagination_detail_job.css('div.detail-box.has-background ul li').children
+        
+        class_value.each do |title|
+          if title.attributes["class"].value == "fa fa-usd"
+            salary = pagination_detail_job.css('div.detail-box.has-background ul li p').text.gsub(/\s+/, " ")
+          elsif title.attributes["class"].value == "fa fa-briefcase"
+            experience = pagination_detail_job.css('div.detail-box.has-background ul li p').text.gsub("\r\n", "").strip
+          elsif title.attributes["class"].value == "mdi mdi-account"
+            type = pagination_detail_job.css('div.detail-box.has-background ul li p').text.gsub(/\s+/, " ")
+          elsif title.attributes["class"].value == "mdi mdi-calendar-check"
+            expired_at = pagination_detail_job.css('div.detail-box.has-background ul li p').text.gsub(/\s+/, " ")
+          end
+        end
+       
+        benefits = pagination_detail_job.css('div.detail-row')[0].text.gsub("\r\n", "").strip,
+        overview = pagination_detail_job.css('div.detail-row')[1].text.gsub("\r\n", "").strip,
+        requirement = pagination_detail_job.css('div.detail-row')[2].text.gsub("\r\n", "").strip,
+        other_requirement = pagination_detail_job.css('div.detail-row')[2].text.gsub(/\s+/, " ")
     page +=1
+    
   end
-  byebug 
+  byebug
 end
 scraper
