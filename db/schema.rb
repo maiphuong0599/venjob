@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_09_043354) do
+ActiveRecord::Schema.define(version: 2021_07_20_145646) do
 
   create_table "apply_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
   create_table "cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "region_id", null: false
     t.string "name"
-    t.string "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["region_id"], name: "index_cities_on_region_id"
@@ -43,12 +42,10 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.integer "total_employee"
-    t.string "type"
-    t.string "benefits"
-    t.text "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "address"
+    t.text "overview"
   end
 
   create_table "companies_cities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -99,11 +96,10 @@ ActiveRecord::Schema.define(version: 2021_07_09_043354) do
     t.text "overview"
     t.text "requirement"
     t.text "other_requirement"
-    t.integer "salary"
+    t.string "salary"
     t.string "type"
     t.string "level"
     t.integer "experience"
-    t.string "degree"
     t.string "benefits"
     t.datetime "expired_at"
     t.datetime "created_at", precision: 6, null: false
