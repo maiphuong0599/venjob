@@ -7,8 +7,8 @@ namespace :crawler do
     job_page = base_url.css('div.menu div.dropdown-menu ul li a')[0].attributes['href'].value
     parse_job_page = Nokogiri::HTML(URI.open(job_page))
     job_listing = parse_job_page.css('div.job-item')
+    per_page = job_listing.present? ? job_listing.length : 0
     page = 1
-    per_page = job_listing.length
     total = parse_job_page.css('div.job-found p').text.split(' ')[0].gsub(',', '').to_i
     last_page = (total.to_f / per_page).round
 
@@ -20,13 +20,16 @@ namespace :crawler do
         company_page = detail_jobs.css('a.company-name').attribute('href').value
         parse_company_url = Nokogiri::HTML(URI.open(company_page))
         company = parse_company_url.css('div.container')
-        company_name = company.css('div.company-info div.content p.name').text
+        
+        company_name = company.css('div.company-info div.content p.name')
+        next if company_name.nil?
+        name = company.css('div.company-info div.content p.name').text
         company_info = company.css('div.company-info div.content')
         address = company_info.css('p')[1].text
         description = company_info.css('ul li').text
         overview = company.css('div.row div.content p').text.gsub(/\s+/, '').strip
         Company.find_or_create_by(
-          name: company_name,
+          name: name,
           address: address,
           description: description,
           overview: overview
@@ -36,8 +39,9 @@ namespace :crawler do
         parse_job_detail_page = Nokogiri::HTML(URI.open(job_detail_page))
         detail_job = parse_job_detail_page.css('div.container')
 
-        title = detail_job.css('div.job-desc h1.title').text
-
+        title = detail_job.css('div.job-desc h1.title')
+        next if title.nil?
+        title_job = detail_job.css('div.job-desc h1.title').text
         salary, experience, level, expired_at = ''
         industry_type = []
         detail_content = detail_job.css('div.detail-box.has-background ul li')
@@ -50,7 +54,7 @@ namespace :crawler do
           when 'Cấp bậc'
             level = content.css('p').text.gsub(/\s+/, '').strip
           when 'Ngành nghề'
-            industry_type = content.css('p a')
+            industry_type = content.css('p a').text.split('/')
           when 'Hết hạn nộp'
             expired_at = content.css('p').text.gsub(/\s+/, '').strip
           end
@@ -71,7 +75,7 @@ namespace :crawler do
           end
         end
         job = Job.find_or_create_by(
-          title: title,
+          title: title_job,
           salary: salary,
           experience: experience,
           level: level,
@@ -80,13 +84,12 @@ namespace :crawler do
           overview: overview,
           requirement: requirement,
           other_requirement: other_requirement,
-          company_id: Company.find_by(name: company_name).id
+          company_id: Company.find_by(name: name).id
         )
 
         industry_type.each do |industry|
-          industry_name = industry.text.gsub(/\s+/, '').split('/')
           industries = Industry.find_or_create_by(
-            name: industry_name
+            name: industry
           )
           job.industries << industries
         end
@@ -106,13 +109,12 @@ namespace :crawler do
 
   desc 'Crawl Industries'
   task industries: :environment do
-    industries_listing = parse_base_url.css('div.container div.list-of-working-positions div.col-md-6.col-lg-4.cus-col')
+    industries_listing = parse_base_url.css('div.col-md-6.col-lg-4.cus-col ul.list-jobs li a')
     industries_listing.each do |industries|
-      industries_type = industries.css('ul.list-jobs li')
-      industries_type.each do |industries_name|
-        name = industries_name.text
+      industries_type = industries.text.split('/')
+      industries_type.each do |industry|
         Industry.find_or_create_by(
-          name: name
+          name: industry
         )
       end
     end
