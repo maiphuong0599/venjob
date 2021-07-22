@@ -20,7 +20,7 @@ namespace :crawler do
         company_url = detail_jobs.css('a.company-name').attribute('href').text
         next if company_url == 'javascript:void(0);'
         slug_company = CGI.escape(company_url.gsub('https://careerbuilder.vn/vi/nha-tuyen-dung/', '').strip)
-        company_page = "https://careerbuilder.vn/vi/viec-lam/#{slug_company}"
+        company_page = "https://careerbuilder.vn/vi/nha-tuyen-dung/#{slug_company}"
         puts company_page
         parse_company_page = Nokogiri::HTML(URI.open(company_page))
         company = parse_company_page.css('div.container')
@@ -30,7 +30,7 @@ namespace :crawler do
         company_info = company.css('div.company-info div.content')
         address = company_info.css('p')[1].try(:text)
         description = company_info.css('ul li').text
-        overview = company.css('div.row div.content p').text.gsub(/\s+/, '').strip
+        overview = company.css('div.row div.content p').text.squish.strip
         Company.find_or_create_by(
           name: name,
           address: address,
@@ -39,50 +39,50 @@ namespace :crawler do
         )
 
         slug_job = CGI.escape(detail_jobs.css('a.job_link').attribute('href').text
-        .gsub('https://careerbuilder.vn/vi/viec-lam/', '').strip)
-        job_detail_page = "https://careerbuilder.vn/vi/viec-lam/#{slug_job}"
+        .gsub('https://careerbuilder.vn/vi/tim-viec-lam/', '').strip)
+        job_detail_page = "https://careerbuilder.vn/vi/tim-viec-lam/#{slug_job}"
         puts job_detail_page
         parse_job_detail_page = Nokogiri::HTML(URI.open(job_detail_page))
         detail_job = parse_job_detail_page.css('div.container')
         title = detail_job.css('div.job-desc h1.title')
         next if title.nil?
         title_job = detail_job.css('div.job-desc h1.title').text
-        salary, experience, level, expired_at = ''
-        industry_type = []
+        salary, experience, type, level, expired_at = ''
         detail_content = detail_job.css('div.detail-box.has-background ul li')
         detail_content.each do |content|
           case content.css('strong').text
           when 'Lương'
-            salary = content.css('p').text.gsub(/\s+/, '').strip
+            salary = content.css('p').text
           when 'Kinh nghiệm'
-            experience = content.css('p').text.gsub(/\s+/, '').strip
+            experience = content.css('p').text
+          when 'Hình thức'
+            type = content.css('p').text
           when 'Cấp bậc'
-            level = content.css('p').text.gsub(/\s+/, '').strip
-          when 'Ngành nghề'
-            puts content.css('p a').text.split('/')
+            level = content.css('p').text
           when 'Hết hạn nộp'
-            expired_at = content.css('p').text.gsub(/\s+/, '').strip
+            expired_at = content.css('p').text
           end
         end
-
         benefits, overview, requirement, other_requirement = ''
         detail_require = detail_job.css('div.detail-row')
         detail_require.each do |detail|
           case detail.css('h3').text
           when 'Phúc lợi '
-            benefits = detail.css('ul li').text.strip
+            benefits = detail.css('ul li').text
           when 'Mô tả Công việc'
-            overview = detail.css('p').text.strip
+            overview = detail.css('p').text
           when 'Yêu Cầu Công Việc'
-            requirement = detail.css('p').text.strip
+            requirement = detail.css('p').text
           when 'Thông tin khác'
-            other_requirement = detail.css('div.content_fck ul li').text.gsub('\r\n', '').strip
+            other_requirement = detail.css('div.content_fck ul li').text.squish
           end
         end
+
         job = Job.find_or_create_by(
           title: title_job,
           salary: salary,
           experience: experience,
+          type: type,
           level: level,
           expired_at: expired_at,
           benefits: benefits,
@@ -92,11 +92,13 @@ namespace :crawler do
           company_id: Company.find_by(name: name).id
         )
 
-        industry_type.each do |industry|
-          industries = Industry.find_or_create_by(
-            name: industry
-          )
-          job.industries << industries
+        industries = detail_job.css('div.detail-box.has-background ul li p a')
+        industries.each do |industry|
+        industry_name = industry.text.squish
+        industries = Industry.find_or_create_by(
+          name: industry_name
+        )
+        job.industries << industries
         end
 
         location = detail_job.css('div.map p a')
@@ -115,13 +117,11 @@ namespace :crawler do
   desc 'Crawl Industries'
   task industries: :environment do
     industries_listing = parse_base_url.css('div.col-md-6.col-lg-4.cus-col ul.list-jobs li a')
-    industries_listing.each do |industries|
-      industries_type = industries.text.split('/')
-      industries_type.each do |industry|
-        Industry.find_or_create_by(
-          name: industry
-        )
-      end
+    industries_listing.each do |industry|
+      industry_name = industry.text
+      Industry.find_or_create_by(
+        name: industry_name
+      )
     end
   end
 
