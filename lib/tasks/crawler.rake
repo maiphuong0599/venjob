@@ -14,18 +14,21 @@ namespace :crawler do
 
     while page <= last_page
       pagination_page_job = "https://careerbuilder.vn/viec-lam/tat-ca-viec-lam-trang-#{page}-vi.html"
-      parse_pagination_page_job = Nokogiri::HTML(URI.open(pagination_page_job ))
+      parse_pagination_page_job = Nokogiri::HTML(URI.open(pagination_page_job))
       pagination_job_listing = parse_pagination_page_job.css('div.job-item')
       pagination_job_listing.each do |detail_jobs|
-        company_page = detail_jobs.css('a.company-name').attribute('href').value
-        parse_company_url = Nokogiri::HTML(URI.open(company_page))
-        company = parse_company_url.css('div.container')
-        
+        company_url = detail_jobs.css('a.company-name').attribute('href').text
+        next if company_url == 'javascript:void(0);'
+        slug_company = CGI.escape(company_url.gsub('https://careerbuilder.vn/vi/nha-tuyen-dung/', '').strip)
+        company_page = "https://careerbuilder.vn/vi/viec-lam/#{slug_company}"
+        puts company_page
+        parse_company_page = Nokogiri::HTML(URI.open(company_page))
+        company = parse_company_page.css('div.container')
         company_name = company.css('div.company-info div.content p.name')
         next if company_name.nil?
         name = company.css('div.company-info div.content p.name').text
         company_info = company.css('div.company-info div.content')
-        address = company_info.css('p')[1].text
+        address = company_info.css('p')[1].try(:text)
         description = company_info.css('ul li').text
         overview = company.css('div.row div.content p').text.gsub(/\s+/, '').strip
         Company.find_or_create_by(
@@ -35,10 +38,12 @@ namespace :crawler do
           overview: overview
         )
 
-        job_detail_page = detail_jobs.css('a.job_link').attribute('href').value
+        slug_job = CGI.escape(detail_jobs.css('a.job_link').attribute('href').text
+        .gsub('https://careerbuilder.vn/vi/viec-lam/', '').strip)
+        job_detail_page = "https://careerbuilder.vn/vi/viec-lam/#{slug_job}"
+        puts job_detail_page
         parse_job_detail_page = Nokogiri::HTML(URI.open(job_detail_page))
         detail_job = parse_job_detail_page.css('div.container')
-
         title = detail_job.css('div.job-desc h1.title')
         next if title.nil?
         title_job = detail_job.css('div.job-desc h1.title').text
@@ -54,7 +59,7 @@ namespace :crawler do
           when 'Cấp bậc'
             level = content.css('p').text.gsub(/\s+/, '').strip
           when 'Ngành nghề'
-            industry_type = content.css('p a').text.split('/')
+            puts content.css('p a').text.split('/')
           when 'Hết hạn nộp'
             expired_at = content.css('p').text.gsub(/\s+/, '').strip
           end
