@@ -12,7 +12,7 @@ namespace :crawler do
     job_listing = parse_job_page.css('div.job-item')
     per_page = job_listing.present? ? job_listing.length : 0
     page = 1
-    total = parse_job_page.css('div.job-found p').text.split(' ')[0].gsub(',', '').to_i
+    total = parse_job_page.css('div.job-found p').text.gsub(/[^0-9]/, '')
     last_page = (total.to_f / per_page).round
 
     while page <= last_page
@@ -105,7 +105,7 @@ namespace :crawler do
           name = industry.text.squish
           job_industries << Industry.find_by(name: name)
         end
-        next if job_industries_cities.nil?
+        next if job_industries.nil?
 
         job.industries << job_industries
 
