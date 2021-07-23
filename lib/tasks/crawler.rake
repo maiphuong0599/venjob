@@ -1,5 +1,4 @@
 require 'open-uri'
-require 'logger'
 
 namespace :crawler do
   desc 'Crawl Jobs and Companies'
@@ -47,7 +46,7 @@ namespace :crawler do
         slug_job = CGI.escape(detail_jobs.css('a.job_link').attribute('href').text
         .gsub('https://careerbuilder.vn/vi/tim-viec-lam/', '').strip)
         job_detail_page = "https://careerbuilder.vn/vi/tim-viec-lam/#{slug_job}"
-        parse_job_detail_page = Nokogiri::HTML(URI.open(job_detail_page).read)
+        parse_job_detail_page = Nokogiri::HTML(URI.open(job_detail_page))
         detail_job = parse_job_detail_page.css('div.container')
         title = detail_job.css('div.job-desc h1.title')
         next if title.nil?
