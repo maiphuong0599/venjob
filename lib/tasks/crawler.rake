@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'logger'
 
 namespace :crawler do
   desc 'Crawl Jobs and Companies'
@@ -19,20 +20,23 @@ namespace :crawler do
       pagination_job_listing.each do |detail_jobs|
         company_url = detail_jobs.css('a.company-name').attribute('href').text
         next if company_url == 'javascript:void(0);'
+
         slug_company = CGI.escape(company_url.gsub('https://careerbuilder.vn/vi/nha-tuyen-dung/', '').strip)
         company_page = "https://careerbuilder.vn/vi/nha-tuyen-dung/#{slug_company}"
-        puts company_page
-        parse_company_page = Nokogiri::HTML(URI.open(company_page))
+        parse_company_page = Nokogiri::HTML(URI.open(company_page).read)
         company = parse_company_page.css('div.container')
         company_name = company.css('div.company-info div.content p.name')
         next if company_name.nil?
-        name = company.css('div.company-info div.content p.name').text
+
+        logger = Logger.new("#{Rails.root}/log/crawler_jobs.log")
+        logger.info("Link company: #{company_page}.to_s")
         company_info = company.css('div.company-info div.content')
         address = company_info.css('p')[1].try(:text)
         description = company_info.css('ul li').text
         overview = company.css('div.row div.content p').text.squish.strip
+
         Company.find_or_create_by(
-          name: name,
+          name: company_name.text,
           address: address,
           description: description,
           overview: overview
@@ -41,27 +45,28 @@ namespace :crawler do
         slug_job = CGI.escape(detail_jobs.css('a.job_link').attribute('href').text
         .gsub('https://careerbuilder.vn/vi/tim-viec-lam/', '').strip)
         job_detail_page = "https://careerbuilder.vn/vi/tim-viec-lam/#{slug_job}"
-        puts job_detail_page
-        parse_job_detail_page = Nokogiri::HTML(URI.open(job_detail_page))
+        parse_job_detail_page = Nokogiri::HTML(URI.open(job_detail_page).read)
         detail_job = parse_job_detail_page.css('div.container')
         title = detail_job.css('div.job-desc h1.title')
         next if title.nil?
-        title_job = detail_job.css('div.job-desc h1.title').text
+
+        logger.info("Link job: #{job_detail_page}")
         salary, experience, type, level, expired_at = ''
-        detail_content = detail_job.css('div.detail-box.has-background ul li')
+        detail_content = detail_job.css('div.col-lg-4 col-sm-6 item-blue ul li')
         detail_content.each do |content|
           case content.css('strong').text
           when 'Lương'
             salary = content.css('p').text
           when 'Kinh nghiệm'
-            experience = content.css('p').text
+            puts content.css('p').text
           when 'Hình thức'
-            type = content.css('p').text
+            puts content.css('p').text
           when 'Cấp bậc'
             level = content.css('p').text
           when 'Hết hạn nộp'
             expired_at = content.css('p').text
           end
+
         end
         benefits, overview, requirement, other_requirement = ''
         detail_require = detail_job.css('div.detail-row')
@@ -79,7 +84,7 @@ namespace :crawler do
         end
 
         job = Job.find_or_create_by(
-          title: title_job,
+          title: title.text,
           salary: salary,
           experience: experience,
           type: type,
@@ -89,25 +94,25 @@ namespace :crawler do
           overview: overview,
           requirement: requirement,
           other_requirement: other_requirement,
-          company_id: Company.find_by(name: name).id
+          company_id: Company.find_by(name: company_name.text).id
         )
 
         industries = detail_job.css('div.detail-box.has-background ul li p a')
         industries.each do |industry|
-        industry_name = industry.text.squish
-        industries = Industry.find_or_create_by(
-          name: industry_name
-        )
-        job.industries << industries
+          name = industry.text.squish
+          industry_name = Industry.find_or_create_by(
+            name: name
+          )
+          job.industries << industry_name
         end
 
         location = detail_job.css('div.map p a')
         location.each do |city|
-          city_name = city.text
-          cities = City.find_or_create_by(
-            name: city_name
+          name = city.text
+          city_name = City.find_or_create_by(
+            name: name
           )
-          job.cities << cities
+          job.cities << city_name
         end
       end
       page += 1
@@ -156,9 +161,12 @@ namespace :crawler do
     end
   end
 
+  desc 'Craw regions, cities, industries, jobs and companies'
+  task all: %i[regions cities industries jobs]
+
   def parse_base_url
     base_url = Nokogiri::HTML(URI.open('https://careerbuilder.vn/'))
-    industries_url = base_url.css('div.menu div.dropdown-menu ul li a')[1].attributes['href'].value
+    industries_url = base_url.css('div.menu div.dropdown-menu ul li a')[1].attributes['href'].text
     Nokogiri::HTML(URI.open(industries_url))
   end
 end
