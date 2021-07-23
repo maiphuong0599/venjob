@@ -120,6 +120,11 @@ namespace :crawler do
         end
 
         job.cities << job_cities
+      rescue StandardError => error
+        logger.error "The company url has error: #{company_page}"
+        logger.error "The job url has error: #{job_detail_page}"
+        logger.error error
+        next
       end
       page += 1
     end
