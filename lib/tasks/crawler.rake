@@ -4,6 +4,8 @@ require 'logger'
 namespace :crawler do
   desc 'Crawl Jobs and Companies'
   task jobs: :environment do
+    logger = Logger.new("#{Rails.root}/log/crawler_jobs.log")
+    logger.info "Start crawler job at: #{Time.current}"
     base_url = Nokogiri::HTML(URI.open('https://careerbuilder.vn/'))
     job_page = base_url.css('div.menu div.dropdown-menu ul li a')[0].attributes['href'].value
     parse_job_page = Nokogiri::HTML(URI.open(job_page))
@@ -28,8 +30,8 @@ namespace :crawler do
         company_name = company.css('div.company-info div.content p.name')
         next if company_name.nil?
 
-        logger = Logger.new("#{Rails.root}/log/crawler_jobs.log")
-        logger.info("Link company: #{company_page}.to_s")
+        logger.info("Link company: #{company_page}")
+
         company_info = company.css('div.company-info div.content')
         address = company_info.css('p')[1].try(:text)
         description = company_info.css('ul li').text
@@ -51,22 +53,22 @@ namespace :crawler do
         next if title.nil?
 
         logger.info("Link job: #{job_detail_page}")
+
         salary, experience, type, level, expired_at = ''
-        detail_content = detail_job.css('div.col-lg-4 col-sm-6 item-blue ul li')
+        detail_content = detail_job.css('div.row div.detail-box.has-background ul li')
         detail_content.each do |content|
           case content.css('strong').text
           when 'Lương'
             salary = content.css('p').text
           when 'Kinh nghiệm'
-            puts content.css('p').text
+            experience = content.css('p').text
           when 'Hình thức'
-            puts content.css('p').text
+            type = content.css('p').text
           when 'Cấp bậc'
             level = content.css('p').text
           when 'Hết hạn nộp'
             expired_at = content.css('p').text
           end
-
         end
         benefits, overview, requirement, other_requirement = ''
         detail_require = detail_job.css('div.detail-row')
@@ -97,26 +99,25 @@ namespace :crawler do
           company_id: Company.find_by(name: company_name.text).id
         )
 
+        job_industries = []
         industries = detail_job.css('div.detail-box.has-background ul li p a')
         industries.each do |industry|
           name = industry.text.squish
-          industry_name = Industry.find_or_create_by(
-            name: name
-          )
-          job.industries << industry_name
+          job_industries << Industry.find__by(name: name)
         end
+        job.industries << job_industries
 
+        job_cities = []
         location = detail_job.css('div.map p a')
         location.each do |city|
           name = city.text
-          city_name = City.find_or_create_by(
-            name: name
-          )
-          job.cities << city_name
+          job_cities << City.find_by(name: name)
         end
+        job.cities << job_cities unless job_cities.nil?
       end
       page += 1
     end
+    logger.info "End crawler job at: #{Time.current}"
   end
 
   desc 'Crawl Industries'
