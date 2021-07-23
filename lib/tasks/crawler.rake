@@ -57,11 +57,11 @@ namespace :crawler do
         salary, experience, type, level, expired_at = ''
         detail_content = detail_job.css('div.row div.detail-box.has-background ul li')
         detail_content.each do |content|
-          case content.css('strong').text
+          case content.css('strong').text.strip
           when 'Lương'
             salary = content.css('p').text
           when 'Kinh nghiệm'
-            experience = content.css('p').text
+            experience = content.css('p').text.gsub('\r\n', '').strip
           when 'Hình thức'
             type = content.css('p').text
           when 'Cấp bậc'
@@ -89,7 +89,7 @@ namespace :crawler do
           title: title.text,
           salary: salary,
           experience: experience,
-          type: type,
+          job_type: type,
           level: level,
           expired_at: expired_at,
           benefits: benefits,
@@ -103,19 +103,22 @@ namespace :crawler do
         industries = detail_job.css('div.detail-box.has-background ul li p a')
         industries.each do |industry|
           name = industry.text.squish
-          job_industries << Industry.find_by(name: name)
-        end
-        next if job_industries.nil?
+          job_industry = Industry.find_by(name: name)
+          next if job_industry.nil?
 
+          job_industries << job_industry
+        end
         job.industries << job_industries
 
         job_cities = []
         location = detail_job.css('div.map p a')
         location.each do |city|
           name = city.text
-          job_cities << City.find_by(name: name)
+          job_city = City.find_by(name: name)
+          next if job_city.nil?
+
+          job_cities << job_city
         end
-        next if job_cities.nil?
 
         job.cities << job_cities
       end

@@ -97,9 +97,9 @@ ActiveRecord::Schema.define(version: 2021_07_23_035105) do
     t.text "requirement"
     t.text "other_requirement"
     t.string "salary"
-    t.string "type"
+    t.string "job_type"
     t.string "level"
-    t.integer "experience"
+    t.string "experience"
     t.string "benefits"
     t.datetime "expired_at"
     t.datetime "created_at", precision: 6, null: false
