@@ -103,8 +103,10 @@ namespace :crawler do
         industries = detail_job.css('div.detail-box.has-background ul li p a')
         industries.each do |industry|
           name = industry.text.squish
-          job_industries << Industry.find__by(name: name)
+          job_industries << Industry.find_by(name: name)
         end
+        next if job_industries_cities.nil?
+
         job.industries << job_industries
 
         job_cities = []
@@ -113,7 +115,9 @@ namespace :crawler do
           name = city.text
           job_cities << City.find_by(name: name)
         end
-        job.cities << job_cities unless job_cities.nil?
+        next if job_cities.nil?
+
+        job.cities << job_cities
       end
       page += 1
     end
