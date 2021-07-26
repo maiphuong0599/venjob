@@ -1,0 +1,14 @@
+header
+  nav.navbar.navbar-expand-lg.navbar-light.bg-dark
+    .container-fluid
+      = image_tag "logo.png", alt: "logo", id: "logo"
+      #navbarExample01.collapse.navbar-collapse
+        ul.navbar-nav.ms-auto.mb-2.mb-lg-0
+          li.nav-item.active
+            = link_to "Login", '#'
+          li.nav-item
+            = link_to "Sign up", '#'
+          li.nav-item
+            = link_to "Favourite", '#'
+          li.nav-item
+            = link_to "History", '#'

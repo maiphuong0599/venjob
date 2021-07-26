@@ -1,0 +1,52 @@
+- provide :title, 'Jobs'
+
+.container
+  .input-group.py-3
+    input.form-control.rounded[type="search" placeholder="Search . . ." aria-label="Search" aria-describedby="search-addon"]
+    button.btn.btn-outline-primary[type="button"]
+      | search
+      
+  h4.py-4
+    | Latest Jobs
+    - @job.each do |job| 
+        .card.my-3
+          .card-body.text-dark
+            h5.mb-1
+              = link_to job.title, "#"
+            h6.mb-1
+              = link_to job.company.name, "#"
+            h6.mb-1
+              | Lương: 
+              = job.salary
+            h6.mb-1
+              - job.cities.each do |city| 
+                  = city.name
+
+  h4
+    | Top Cities
+    .row.my-3.text-center
+      - @city.each do |name,amount|
+        .col-4.p-2.border.mb-1
+          = link_to name, "#"
+          p.mb-1
+          = amount
+    .d-flex.flex-row-reverse.p-2
+      = link_to 'All Cities', "#"
+
+  h4
+    | Top Industries
+    .row.my-3.text-center
+      - @industry.each do |name,amount|
+          .col-4.p-2.border.mb-1
+            = link_to name, "#"
+            p.mb-1
+            = amount
+    .d-flex.flex-row-reverse.p-2
+      = link_to 'All Industries', "#"
+
+
+              
+
+
+
+

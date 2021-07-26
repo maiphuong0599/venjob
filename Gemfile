@@ -7,6 +7,8 @@ ruby '3.0.1'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 gem 'bootstrap', '~> 5.0.1'
 gem 'nokogiri', '~> 1.11', '>= 1.11.7'
+gem 'html2slim'
+gem 'slim-rails'
 
 
 # Use sqlite3 as the database for Active Record
