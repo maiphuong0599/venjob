@@ -4,8 +4,7 @@
   .input-group.py-3
     input.form-control.rounded[type="search" placeholder="Search . . ." aria-label="Search" aria-describedby="search-addon"]
     button.btn.btn-outline-primary[type="button"]
-      | search
-      
+      | search   
   h4.py-4
     | Latest Jobs
     - @job.each do |job| 
@@ -13,40 +12,33 @@
           .card-body.text-dark
             h5.mb-1
               = link_to job.title, "#"
-            h6.mb-1
+            p.mb-1
               = link_to job.company.name, "#"
-            h6.mb-1
+            p.mb-1
+              i.fas.fa-dollar-sign.m-1
               | Lương: 
               = job.salary
-            h6.mb-1
+            p.mb-1
+              i.fas.fa-map-marker-alt.m-1
               - job.cities.each do |city| 
                   = city.name
-
   h4
     | Top Cities
-    .row.my-3.text-center
-      - @city.each do |name,amount|
-        .col-4.p-2.border.mb-1
+    .row.my-3.text-center.fs-5
+      - @city.each do |name, amount|
+        .col-4.p-2.border.mb-1.fw-normal
           = link_to name, "#"
           p.mb-1
           = amount
-    .d-flex.flex-row-reverse.p-2
-      = link_to 'All Cities', "#"
-
+    .d-flex.flex-row-reverse.
+      = link_to 'All Cities', "#", class: "more" 
   h4
     | Top Industries
-    .row.my-3.text-center
-      - @industry.each do |name,amount|
-          .col-4.p-2.border.mb-1
+    .row.my-3.text-center.fs-5
+      - @industry.each do |name, amount|
+          .col-4.p-2.border.mb-1.fw-normal
             = link_to name, "#"
             p.mb-1
             = amount
-    .d-flex.flex-row-reverse.p-2
-      = link_to 'All Industries', "#"
-
-
-              
-
-
-
-
+    .d-flex.flex-row-reverse
+      = link_to 'All Industries', "#", class: "more"
