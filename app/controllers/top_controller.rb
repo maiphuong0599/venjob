@@ -1,7 +1,7 @@
 class TopController < ApplicationController
   def home
-    @job = Job.join_order
-    @city = City.join_group
-    @industry = Industry.join_group
+    @jobs = Job.latest_jobs
+    @cities = City.top_cities
+    @industries = Industry.top_industries
   end
 end

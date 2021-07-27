@@ -1,13 +1,16 @@
 - provide :title, 'Jobs'
 
+h3.p-2
+  |Total Jobs:
+  = Job.all.count
 .container
   .input-group.py-3
-    input.form-control.rounded[type="search" placeholder="Search . . ." aria-label="Search" aria-describedby="search-addon"]
+    input.form-control.rounded[type="search" placeholder="Search" aria-label="Search" aria-describedby="search-addon"]
     button.btn.btn-outline-primary[type="button"]
       | search   
   h4.py-4
     | Latest Jobs
-    - @job.each do |job| 
+    - @jobs.each do |job|
         .card.my-3
           .card-body.text-dark
             h5.mb-1
@@ -20,25 +23,25 @@
               = job.salary
             p.mb-1
               i.fas.fa-map-marker-alt.m-1
-              - job.cities.each do |city| 
-                  = city.name
+              - job.cities.each do |job|
+                = job.name
   h4
     | Top Cities
     .row.my-3.text-center.fs-5
-      - @city.each do |name, amount|
+      - @cities.each do |name, amount|
         .col-4.p-2.border.mb-1.fw-normal
           = link_to name, "#"
           p.mb-1
           = amount
     .d-flex.flex-row-reverse.
-      = link_to 'All Cities', "#", class: "more" 
+      = link_to 'All Cities', "#", class: "more"
   h4
     | Top Industries
     .row.my-3.text-center.fs-5
-      - @industry.each do |name, amount|
-          .col-4.p-2.border.mb-1.fw-normal
-            = link_to name, "#"
-            p.mb-1
-            = amount
+      - @industries.each do |name, amount|
+        .col-4.p-2.border.mb-1.fw-normal
+          = link_to name, "#"
+          p.mb-1
+          = amount
     .d-flex.flex-row-reverse
       = link_to 'All Industries', "#", class: "more"
