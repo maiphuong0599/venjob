@@ -5,4 +5,3 @@ class City < ApplicationRecord
   LATEST_CITY_NUMBER = 9
   scope :top_cities, -> { joins(:jobs).group(:name).order('count_all DESC').count.take(LATEST_CITY_NUMBER) }
 end
-
