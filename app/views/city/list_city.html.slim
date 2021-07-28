@@ -1,0 +1,28 @@
+- provide :title, 'Cities'
+
+.container
+  h3.p-3
+    | City list
+    .row.my-3.text-center.fs-3
+      .col-6.p-2.mb-1.fw-normal
+        = link_to 'Việt Nam', anchor: 'vietnam'
+      .col-6.p-2.mb-1.fw-normal
+        = link_to 'International', anchor: 'international'
+  #vietnam
+    h3
+      | Việt Nam
+      .row.my-3.text-center.fs-5
+        - @city_vietnam.each do |name, amount|
+            .col-3.p-2.border.mb-1.fw-normal.bg-white
+              = link_to name, "#"
+              p.mb-1
+              = amount
+  #international
+    h3
+      | International
+      .row.my-3.text-center.fs-5
+        - @city_inter.each do |name, amount|
+          .col-3.p-2.border.mb-1.fw-normal.bg-white
+            = link_to name, "#"
+            p.mb-1
+            = amount
