@@ -19,12 +19,13 @@ h3.p-2
               = link_to job.company.name, "#"
             p.mb-1
               i.fas.fa-dollar-sign.m-1
-              | Lương:
+              | Lương: 
               = job.salary
             p.mb-1
               i.fas.fa-map-marker-alt.m-1
-              - job.cities.each do |city|
-                = city.name
+              = link_to job.cities.map(&:name).join(', '), "#"
+ 
+
   h4
     | Top Cities
     .row.my-3.text-center.fs-5
