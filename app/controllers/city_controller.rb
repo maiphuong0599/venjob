@@ -1,6 +1,6 @@
 class CityController < ApplicationController
   def list_city
-    @city_vietnam = City.city_vietnam
-    @city_inter = City.city_inter
+    @cities_vietnam = City.cities(City::REGION_VN_ID)
+    @cities_international = City.cities(City::REGION_INTERNATIONAL_ID)
   end
 end

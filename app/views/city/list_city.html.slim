@@ -1,4 +1,4 @@
-- provide :title, 'Cities'
+- provide :title, 'City List'
 
 .container
   h3.p-3
@@ -12,7 +12,7 @@
     h3
       | Việt Nam
       .row.my-3.text-center.fs-5
-        - @city_vietnam.each do |name, amount|
+        - @cities_vietnam.each do |name, amount|
             .col-3.p-2.border.mb-1.fw-normal.bg-white
               = link_to name, "#"
               p.mb-1
@@ -21,7 +21,7 @@
     h3
       | International
       .row.my-3.text-center.fs-5
-        - @city_inter.each do |name, amount|
+        - @cities_international.each do |name, amount|
           .col-3.p-2.border.mb-1.fw-normal.bg-white
             = link_to name, "#"
             p.mb-1
