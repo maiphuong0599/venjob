@@ -14,7 +14,7 @@
       .row.my-3.text-center.fs-5
         - @cities_vietnam.each do |name, amount|
             .col-3.p-2.border.mb-1.fw-normal.bg-white
-              = link_to name, "#"
+              = link_to name, city_path(City.find_by(name: name)) 
               p.mb-1
               = amount
   #international
@@ -23,6 +23,6 @@
       .row.my-3.text-center.fs-5
         - @cities_international.each do |name, amount|
           .col-3.p-2.border.mb-1.fw-normal.bg-white
-            = link_to name, "#"
+            = link_to name, city_path(City.find_by(name: name)) 
             p.mb-1
             = amount

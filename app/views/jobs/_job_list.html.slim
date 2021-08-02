@@ -1,0 +1,24 @@
+.container
+  h6.offset-md-4
+    = paginate @jobs, window: 1
+  .job-list
+    - @jobs.each do |job| 
+      .card.my-3
+        .card-body.text-dark
+          h5.mb-1
+            = link_to job.title, "#"
+          p.mb-1
+            = link_to job.company.name, "#"
+          p.mb-1
+            i.fas.fa-dollar-sign.m-1
+            | Lương: 
+            = job.salary
+          p.mb-1
+            i.fas.fa-map-marker-alt.m-1
+            = link_to job.cities.map(&:name).uniq.join(' | '), "#"
+          p.mb-1
+            = truncate(job.overview, length: 250)
+  h6.offset-md-4.px-5
+    = page_entries_info @jobs
+  h6.offset-md-4
+    = paginate @jobs, window: 1
