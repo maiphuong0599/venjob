@@ -6,5 +6,5 @@ class Job < ApplicationRecord
   has_and_belongs_to_many :industries
   has_and_belongs_to_many :cities
   LATEST_JOB_NUMBER = 5
-  scope :latest_jobs, -> { includes(:cities, :company).order('created_at DESC').limit(LATEST_JOB_NUMBER) }
+  scope :latest_jobs, -> { includes(:cities, :industries, :company).order('created_at DESC') }
 end

@@ -26,7 +26,7 @@ h3.p-2
     .row.my-3.text-center.fs-5
       - @cities.each do |name, amount|
         .col-4.p-2.border.mb-1.fw-normal.bg-white
-          = link_to name, city_slug_path(City.find_by(name: name)) 
+          = link_to name[0], city_slug_path(name[1])
           p.mb-1
           = amount
     .d-flex.flex-row-reverse.
@@ -36,7 +36,7 @@ h3.p-2
     .row.my-3.text-center.fs-5
       - @industries.each do |name, amount|
         .col-4.p-2.border.mb-1.fw-normal.bg-white
-          = link_to name, industry_slug_path(Industry.find_by(name: name)) 
+          = link_to name[0], industry_slug_path(name[1])
           p.mb-1
           = amount
     .d-flex.flex-row-reverse

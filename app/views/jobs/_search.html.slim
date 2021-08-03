@@ -1,7 +1,4 @@
 .search.p-3.offset-md-2
-  = form_with(url: '/search', method: 'get', local: true) do 
+  = form_with(url: '/jobs', method: 'get', local: true) do 
     = text_field_tag :search, params[:search], placeholder: "Search", class: "form"
     = submit_tag "Search", name: nil, class: 'btn-primary'
-
-
-    
