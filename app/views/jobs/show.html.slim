@@ -1,0 +1,35 @@
+- provide :title, 'Job List'
+
+= render 'search'
+.container
+  h5.fw-normal
+    | Total: 
+    = pluralize(@total, 'job')
+  h5.fw-normal 
+    | Result for: 
+    = @result
+  h6.offset-md-4
+    = paginate @jobs, window: 1
+  .job-list
+    - @jobs.each do |job| 
+      .row.bg-white
+        .col-10.p-3.border.card-body.text-dark
+          h5.mb-1
+            = link_to job.title, "#"
+          p.mb-1
+            = link_to job.company.name, "#"
+          p.mb-1
+            i.fas.fa-dollar-sign.m-1
+            | Lương: 
+            = job.salary
+          p.mb-1
+            i.fas.fa-map-marker-alt.m-1
+            = link_to job.cities.map(&:name).uniq.join(' | '), "#"
+          p.mb-1
+            = truncate(job.overview, length: 250)
+        .col-sm-2.p-3.border.favourite
+          = link_to "Farourite", "#", class: "btn btn-outline-primary"
+  h6.offset-md-4.px-5
+    = page_entries_info @jobs
+  h6.offset-md-4
+    = paginate @jobs, window: 1

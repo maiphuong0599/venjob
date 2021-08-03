@@ -6,6 +6,6 @@
     .row.my-3.text-center.fs-5
       - @industry_list.each do |name, amount|
         .col-3.p-2.border.mb-1.fw-normal.bg-white
-          = link_to name, "#"
+          = link_to name[0], industry_slug_path(name[1]) 
           p.mb-1
           = amount
