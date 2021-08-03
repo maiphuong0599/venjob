@@ -3,9 +3,11 @@
 = render 'search'
 .container
   h5.fw-normal
-    | Total:
+    | Total: 
+    = pluralize(@total, 'job')
   h5.fw-normal 
     | Result for: 
+    = @result
   h6.offset-md-4
     = paginate @jobs, window: 1
   .job-list
