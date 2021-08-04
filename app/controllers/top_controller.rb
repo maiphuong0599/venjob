@@ -1,5 +1,5 @@
 class TopController < ApplicationController
-  def home
+  def index
     @jobs = Job.latest_jobs.limit(Job::LATEST_JOB_NUMBER)
     @cities = City.top_cities
     @industries = Industry.top_industries

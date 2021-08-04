@@ -11,7 +11,7 @@ h3.p-2
         .card.my-3
           .card-body.text-dark
             h5.mb-1
-              = link_to job.title, "#"
+              = link_to job.title, detail_path(job.id)
             p.mb-1
               = link_to job.company.name, "#"
             p.mb-1
