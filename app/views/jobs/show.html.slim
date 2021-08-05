@@ -15,7 +15,7 @@
         p.mb-2
           | Location: 
           - @job.cities.each do |city|
-            = link_to city.name, city_slug_path(city.slug)
+            = link_to city.name + ' | ', city_slug_path(city.slug)
         p.mb-2
           | Job type:  
           = @job.job_type
