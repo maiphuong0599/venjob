@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  def show
+  def index
     if params[:city_slug].present?
       city = City.find_by(slug: params[:city_slug])
       jobs = city.jobs
@@ -11,5 +11,9 @@ class JobsController < ApplicationController
     end
     @total = jobs.count
     @jobs = jobs.latest_jobs.page(params[:page])
+  end
+
+  def show
+    @job = Job.latest_jobs.find_by(slug: params[:job_slug])
   end
 end

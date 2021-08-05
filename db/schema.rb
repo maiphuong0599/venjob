@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_31_111344) do
+ActiveRecord::Schema.define(version: 2021_08_05_021856) do
 
   create_table "apply_jobs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -119,7 +119,9 @@ ActiveRecord::Schema.define(version: 2021_07_31_111344) do
     t.datetime "expired_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
     t.index ["company_id"], name: "index_jobs_on_company_id"
+    t.index ["slug"], name: "index_jobs_on_slug", unique: true
   end
 
   create_table "regions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

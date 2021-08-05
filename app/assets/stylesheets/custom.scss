@@ -1,6 +1,5 @@
 @import "bootstrap";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
-/* header */
 #logo {
   float: left;
   margin-right: 10px;
@@ -24,6 +23,7 @@
 .container p {
   font-weight: 400;
   font-size: medium;
+  text-align: justify;
   }
   a {
     color: rgb(14, 14, 14);
@@ -56,5 +56,10 @@
     align-items: center;
     justify-content: center;
   }
+}
+
+.apply-job .btn {
+  align-items: center;
+  justify-content: center;
 }
 

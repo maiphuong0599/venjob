@@ -1,35 +1,56 @@
-- provide :title, 'Job List'
+- provide :title, 'Job Detail'
 
-= render 'search'
-.container
-  h5.fw-normal
-    | Total: 
-    = pluralize(@total, 'job')
-  h5.fw-normal 
-    | Result for: 
-    = @result
-  h6.offset-md-4
-    = paginate @jobs, window: 1
-  .job-list
-    - @jobs.each do |job| 
-      .row.bg-white
-        .col-10.p-3.border.card-body.text-dark
-          h5.mb-1
-            = link_to job.title, "#"
-          p.mb-1
-            = link_to job.company.name, "#"
-          p.mb-1
-            i.fas.fa-dollar-sign.m-1
-            | Lương: 
-            = job.salary
-          p.mb-1
-            i.fas.fa-map-marker-alt.m-1
-            = link_to job.cities.map(&:name).uniq.join(' | '), "#"
-          p.mb-1
-            = truncate(job.overview, length: 250)
-        .col-sm-2.p-3.border.favourite
-          = link_to "Farourite", "#", class: "btn btn-outline-primary"
-  h6.offset-md-4.px-5
-    = page_entries_info @jobs
-  h6.offset-md-4
-    = paginate @jobs, window: 1
+= render 'breadcrumb'
+.row.bg-white
+  .col-10.p-3.detail-job.text-dark
+    h1.mb-2
+      = @job.title
+    h3.mb-2
+      = @job.company.name
+    .row
+      .col
+        p.mb-2
+          | Lương: 
+          = @job.salary
+        p.mb-2
+          | Location: 
+          - @job.cities.each do |city|
+            = link_to city.name + ' | ', city_slug_path(city.slug)
+        p.mb-2
+          | Job type:  
+          = @job.job_type
+      .col
+        p.mb-2
+          | Level: 
+          = @job.level
+        p.mb-2
+          | Experience: 
+          = @job.experience
+        p.mb-2
+          | Expired at: 
+          = format_datetime(@job.expired_at)
+    h5.my-3
+      | Benefits
+    p.mb-2
+      = @job.benefits
+    h5.my-3
+      | Overview
+    p.mb-2
+      - @job.overview
+    h5.my-3
+      | Requirement 
+    p.mb-2
+      = @job.requirement
+    h5.my-3
+      | Other requirement 
+    p.mb-2
+      = @job.other_requirement
+  .col-sm-2.p-3.apply-job
+    = link_to "Apply this Job", "#", class: "btn btn-outline-primary btn-lg"
+.row.bg-white.p-4
+  .col.text-end
+    = link_to "Apply this Job", "#", class: "btn btn-outline-primary btn-lg"
+  .col
+    = link_to "Favourite", "#", class: "btn btn-outline-primary btn-lg"
+
+  
