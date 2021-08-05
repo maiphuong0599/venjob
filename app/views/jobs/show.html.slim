@@ -6,7 +6,7 @@
     h1.mb-2
       = @job.title
     h3.mb-2
-      = link_to @job.company.name, "#"
+      = @job.company.name
     .row
       .col
         p.mb-2
@@ -28,7 +28,7 @@
           = @job.experience
         p.mb-2
           | Expired at: 
-          = @job.expired_at.strftime("%d/%m/%Y")
+          = format_datetime(@job.expired_at)
     h5.my-3
       | Benefits
     p.mb-2

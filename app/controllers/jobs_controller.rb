@@ -14,6 +14,6 @@ class JobsController < ApplicationController
   end
 
   def show
-    @job = Job.latest_jobs.find_by(id: params[:job_id])
+    @job = Job.latest_jobs.find_by(slug: params[:job_slug])
   end
 end
