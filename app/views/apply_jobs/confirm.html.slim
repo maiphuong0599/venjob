@@ -2,11 +2,14 @@ h2.text-center.p-4
   | CONFIRM INFORMATION
 .col-md-6.offset-md-3
   = form_with(model: @apply_job, url: '/done', local: true) do |f|
+    = f.hidden_field :job_id, @apply.job_id
     = f.label :name
-    = f.text_field :name, required: true, placeholder: "Type name...", class: 'form-control'
+    = f.text_field :name, required: true, disabled: true, placeholder: "Type name...", class: 'form-control'
+    = f.hidden_field :name, required: true
 
     = f.label :email
-    = f.text_field :email, required: true,  placeholder: "Type email...", class: 'form-control'
+    = f.text_field :email, required: true, disabled: true, placeholder: "Type email...", class: 'form-control'
+    = f.hidden_field :email, required: true
     p
       = f.label :cv, "CV"
       = f.file_field :cv, required: true, accept: "application/pdf" 

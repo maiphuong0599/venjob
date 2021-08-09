@@ -1,16 +1,20 @@
 class ApplyJobsController < ApplicationController
   def new
+    @apply_job = ApplyJob.new
+    @apply_job.job_id = params[:job_id]
   end
 
   def confirm
     @apply_job = ApplyJob.new(apply_params)
+    @apply_job.job_id = apply_params[:job_id]
   end
 
   def done
     @apply_job = ApplyJob.new(apply_params)
-    if @apply_job.save
-      flash[:success] = "Done!"
-      redirect_to confirm_url(@apply_job)
+    @apply_job.user_id = User.find_by(id: 1).id
+    @apply_job.job_id = apply_params[:job_id]
+    if @apply_job.save!
+      flash.now[:success] = 'Done hehe!'
     else
       redirect_to root_url
     end
@@ -19,6 +23,6 @@ class ApplyJobsController < ApplicationController
   private
 
   def apply_params
-    params.permit(:name, :email, :cv)
+    params.require(:apply_job).permit(:name, :email, :cv)
   end
 end

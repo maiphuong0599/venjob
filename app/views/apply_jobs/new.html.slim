@@ -3,6 +3,7 @@ h2.text-center.p-4
   | APPLY INFORMATION
 .col-md-6.offset-md-3
   = form_with(model: @apply_job, url: '/confirm', local: true) do |f|
+    = f.hidden_field :job_id, @apply.job_id
     = f.label :name
     = f.text_field :name, required: true, placeholder: "Type name...", class: 'form-control'
 
