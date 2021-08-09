@@ -1,0 +1,15 @@
+= render 'ribbon'
+h2.text-center.p-4
+  | APPLY INFORMATION
+.col-md-6.offset-md-3
+  = form_with(model: @apply_job, url: '/confirm', local: true) do |f|
+    = f.label :name
+    = f.text_field :name, required: true, placeholder: "Type name...", class: 'form-control'
+
+    = f.label :email
+    = f.text_field :email, required: true,  placeholder: "Type email...", class: 'form-control'
+    p
+      = f.label :cv, "CV"
+      = f.file_field :cv, required: true, accept: "application/pdf" 
+    .span.p-4.text-center
+      = f.submit "Confirm", class: "btn btn-primary btn-lg"
