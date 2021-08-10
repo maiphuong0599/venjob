@@ -1,0 +1,24 @@
+p
+  | Dear 
+  = @apply_job.name
+  | ,
+p
+  | Thank you for applied with VenJOB. Your applied job's information is as follow:
+
+/ Job title: <Job title>
+/ Location: <Job location>
+/ Company: <Company>
+
+p
+  | Your submitted information:
+p
+  | Full Name: 
+  = @apply_job.name
+p
+  | Email: 
+  = @apply_job.email
+p
+  | CV Link: 
+  = url_for(@apply_job.cv)
+p
+  | Best,

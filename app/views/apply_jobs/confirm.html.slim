@@ -1,17 +1,30 @@
+.ribbon
+  ul.progressbar
+    li
+      .span.indicator
+      .span.title Apply
+    li.active
+      .span.indicator.2
+      .span.title Confirm
+    li
+      .span.indicator.3
+      .span.title Done
 h2.text-center.p-4
   | CONFIRM INFORMATION
 .col-md-6.offset-md-3
   = form_with(model: @apply_job, url: '/done', local: true) do |f|
-    = f.hidden_field :job_id, @apply.job_id
+    = f.hidden_field :job_id
     = f.label :name
-    = f.text_field :name, required: true, disabled: true, placeholder: "Type name...", class: 'form-control'
-    = f.hidden_field :name, required: true
+    = f.text_field :name, required: true, disabled: true,length: { maximum: 200 }, placeholder: "Type name...", class: 'form-control'
+    = f.hidden_field :name, required: true, length: { maximum: 50 }
 
     = f.label :email
-    = f.text_field :email, required: true, disabled: true, placeholder: "Type email...", class: 'form-control'
-    = f.hidden_field :email, required: true
-    p
+    = f.text_field :email, required: true, disabled: true,length: { maximum: 255 }, format: { with: ApplyJob::VALID_EMAIL_REGEX}, placeholder: "Type email...", class: 'form-control'
+    = f.hidden_field :email, required: true, length: { maximum: 255 }, format: { with: ApplyJob::VALID_EMAIL_REGEX}
+    p.my-1
       = f.label :cv, "CV"
+    p
       = f.file_field :cv, required: true, accept: "application/pdf" 
     .span.p-4.text-center
-      = f.submit "Done", class: "btn btn-primary btn-lg"
+      = link_to "Back", apply_path, class: "btn btn-primary btn-lg btn-space"
+      = f.submit "Done", class: "btn btn-primary btn-lg btn-space"

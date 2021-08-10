@@ -2,8 +2,8 @@ class ApplyJob < ApplicationRecord
   belongs_to :user
   belongs_to :job
   has_one_attached :cv
-  validates :name, presence: true #size: { less_than_or_equal_to: 400.bytes, message: 'is not given between size' }
-  validates :email, presence: true
-  validates :cv, attached: true #, content_type: { in: 'application/pdf', message: 'must be a valid cv format' }
-  #content_type: { in: %w[application/msword application/pdf]
+  validates :name, presence: true, length: { maximum: 200 }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }
+  validates :cv, attached: true, content_type: { in: 'application/pdf', message: 'must be a valid cv format' }
 end

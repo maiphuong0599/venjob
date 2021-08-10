@@ -1,16 +1,26 @@
-= render 'ribbon'
+.ribbon
+  ul.progressbar
+    li.active
+      .span.indicator
+      .span.title Apply
+    li
+      .span.indicator.2
+      .span.title Confirm
+    li
+      .span.indicator.3
+      .span.title Done
 h2.text-center.p-4
   | APPLY INFORMATION
 .col-md-6.offset-md-3
   = form_with(model: @apply_job, url: '/confirm', local: true) do |f|
-    = f.hidden_field :job_id, @apply.job_id
-    = f.label :name
-    = f.text_field :name, required: true, placeholder: "Type name...", class: 'form-control'
+    = f.hidden_field :job_id
+    = f.text_field :name, required: true,length: { maximum: 200 }, placeholder: "Type name...", class: 'form-control'
 
     = f.label :email
-    = f.text_field :email, required: true,  placeholder: "Type email...", class: 'form-control'
-    p
+    = f.text_field :email, required: true, length: { maximum: 255 }, format: { with: ApplyJob::VALID_EMAIL_REGEX}, placeholder: "Type email...", class: 'form-control'
+    p.my-1
       = f.label :cv, "CV"
-      = f.file_field :cv, required: true, accept: "application/pdf" 
+    p
+      = f.file_field :cv, required: true, accept: "application/pdf"
     .span.p-4.text-center
       = f.submit "Confirm", class: "btn btn-primary btn-lg"

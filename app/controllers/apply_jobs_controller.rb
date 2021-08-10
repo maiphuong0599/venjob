@@ -14,7 +14,8 @@ class ApplyJobsController < ApplicationController
     @apply_job.user_id = User.find_by(id: 1).id
     @apply_job.job_id = apply_params[:job_id]
     if @apply_job.save!
-      flash.now[:success] = 'Done hehe!'
+      ApplyJobMailer.with(apply_job: @apply_job).create_apply.deliver_now
+      flash.now[:success] = "You have applied successfully"
     else
       redirect_to root_url
     end
@@ -23,6 +24,6 @@ class ApplyJobsController < ApplicationController
   private
 
   def apply_params
-    params.require(:apply_job).permit(:name, :email, :cv)
+    params.require(:apply_job).permit(:name, :email, :cv, :job_id)
   end
 end
