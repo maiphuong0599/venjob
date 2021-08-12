@@ -5,5 +5,6 @@ class ApplyJob < ApplicationRecord
   validates :name, presence: true, length: { maximum: 200 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }
-  validates :cv, attached: true, content_type: { in: 'application/pdf', message: 'must be a valid cv format' }
+  validates :cv, presence: true, content_type: { in: 'application/pdf', message: 'must be a valid image format' },
+                 size: { less_than: 5.megabytes, message: 'should be less than 5MB' }
 end

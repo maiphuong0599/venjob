@@ -4,11 +4,15 @@ p
   | ,
 p
   | Thank you for applied with VenJOB. Your applied job's information is as follow:
-
-/ Job title: <Job title>
-/ Location: <Job location>
-/ Company: <Company>
-
+p
+  | Job title: 
+  = @job.title
+p
+  | Company: 
+  = @job.company.name
+p
+  | Location: 
+  = @job.cities.map(&:name).uniq.join(' , ')
 p
   | Your submitted information:
 p

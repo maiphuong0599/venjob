@@ -1,10 +1,15 @@
-
   | Dear 
     = @apply_job.name
   | ,
   | Thank you for applied with VenJOB. Your applied job's information is as follow:
 
   | Your submitted information:
+  | Job title: 
+    = @job.title 
+  | Company:
+    = @job.company.name
+  | Location:
+    = @job.cities.map(&:name).uniq.join(' , ')
   | Full Name:
     = @apply_job.name
   | Email:
