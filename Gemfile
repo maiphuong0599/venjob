@@ -11,6 +11,8 @@ gem 'slim-rails'
 gem 'kaminari', '~> 1.2', '>= 1.2.1'
 gem 'friendly_id', '~> 5.4', '>= 5.4.2'
 gem 'babosa'
+gem 'active_storage_validations'
+gem 'mini_magick', '>= 4.9.5'
 # Use sqlite3 as the database for Active Record
 gem 'mysql2', '~> 0.5.3'
 # Use Puma as the app server

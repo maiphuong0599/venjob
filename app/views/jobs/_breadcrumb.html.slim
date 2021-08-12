@@ -3,7 +3,7 @@ nav.breadcrumb[style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb"]
     li.breadcrumb-item 
       = link_to "Top", root_path
     li.breadcrumb-item
-      - @job.cities.each do |city|
+      - @job.cities.each.uniq do |city|
         = link_to city.name + '  ', city_slug_path(city.slug) 
     li.breadcrumb-item
       - @job.industries.each do |industry|
