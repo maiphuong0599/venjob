@@ -6,7 +6,7 @@ h2.text-center.form-title
     = render 'shared/error_messages'
     = f.hidden_field :job_id
     = f.label :name
-    = f.text_field :name, required: true,length: { maximum: 200 }, placeholder: "Type name...", class: 'form-control'
+    = f.text_field :name, required: true, length: { maximum: 200 }, placeholder: "Type name...", class: 'form-control'
 
     = f.label :email
     = f.text_field :email, required: true, length: { maximum: 255 }, format: { with: ApplyJob::VALID_EMAIL_REGEX}, placeholder: "Type email...", class: 'form-control'

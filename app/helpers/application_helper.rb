@@ -12,8 +12,6 @@ module ApplicationHelper
   end
 
   def current_page?(*paths)
-    return true if paths.include?(request.path)
-
-    false
+    paths.include?(request.path)
   end
 end
