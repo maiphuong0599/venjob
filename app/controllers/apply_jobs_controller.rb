@@ -35,7 +35,7 @@ class ApplyJobsController < ApplicationController
     @apply_job.user_id = User.find_by(id: 1).id
     @job = Job.latest_jobs.find(apply_params[:job_id])
     @apply_job.cv = ActiveStorage::Blob.find(session[:id])
-    if @apply_job.save!
+    if @apply_job.save
       ApplyJobMailer.with(apply_job: @apply_job, job: @job).create_apply.deliver_now
       flash.now[:success] = 'You have applied successfully'
     else
