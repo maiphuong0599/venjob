@@ -15,9 +15,10 @@ h2.text-center
                            placeholder: "Type email...", class: 'form-control'
     = f.hidden_field :email
     p.my-1
-      = f.label :cv, "CV"
-    p
-      = f.file_field :cv, required: true, accept: "application/pdf", size: { less_than: 5.megabytes, message:"should be less than 5MB" }
+      = f.label :cv, "Your CV" 
+      br
+      = f.hidden_field :id, value: @blob.id
+      = @apply_job.cv.filename
     .span.p-3.text-center
       = link_to "Back", apply_path(job_id: @apply_job.job_id), class: "btn btn-primary btn-space"
       = f.submit "Done", class: "btn btn-primary btn-space"
