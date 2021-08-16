@@ -6,8 +6,10 @@ class ApplyJobsController < ApplicationController
 
     if session[:apply_job].present?
       @apply_job = ApplyJob.new(session[:apply_job])
-      @blob = ActiveStorage::Blob.find(session[:id])
-      @apply_job.assign_attributes(cv: @blob)
+      if session[:blob_id].present?
+        @blob = ActiveStorage::Blob.find(session[:blob_id])
+        @apply_job.assign_attributes(cv: @blob)
+      end
     else
       @apply_job = ApplyJob.new
     end
@@ -23,7 +25,7 @@ class ApplyJobsController < ApplicationController
         filename: apply_params[:cv].original_filename,
         content_type: apply_params[:cv].content_type
       )
-      session[:id] = @blob.id
+      session[:blob_id] = @blob.id
       session[:apply_job] = @apply_job
     else
       render :new
@@ -34,7 +36,7 @@ class ApplyJobsController < ApplicationController
     @apply_job = ApplyJob.new(apply_params)
     @apply_job.user_id = User.find_by(id: 1).id
     @job = Job.latest_jobs.find(apply_params[:job_id])
-    @apply_job.cv = ActiveStorage::Blob.find(session[:id])
+    @apply_job.cv = ActiveStorage::Blob.find(session[:blob_id])
     if @apply_job.save
       ApplyJobMailer.with(apply_job: @apply_job, job: @job).create_apply.deliver_now
       flash.now[:success] = 'You have applied successfully'
@@ -43,7 +45,7 @@ class ApplyJobsController < ApplicationController
       redirect_to root_url
     end
     session[:apply_job] = nil
-    session[:id] = nil
+    session[:blob_id] = nil
   end
 
   private
