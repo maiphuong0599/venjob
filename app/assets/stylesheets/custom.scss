@@ -7,9 +7,16 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+body {
+  position: relative;
+  padding-bottom: 228px;
+  min-height: 100vh;
+}
 
 footer {
-  min-height: 227px;
+  position:absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .navbar ul li a {
