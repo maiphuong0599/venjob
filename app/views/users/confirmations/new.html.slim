@@ -1,0 +1,14 @@
+h2.p-3.text-center
+  | Register
+.row
+  .col-md-6.offset-md-3.form-apply
+    = form_for(resource, as: resource_name, url: register_2_path) do |f|
+      = render 'shared/error_messages', object: resource
+      .card
+        .card-body
+          .field
+            = f.label :email
+            br
+            = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'form-control'
+          .actions.p-3.text-center
+            = f.submit "Confirm your email", class: "btn btn-primary"
