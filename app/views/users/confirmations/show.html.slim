@@ -1,8 +1,8 @@
 h2.p-3.text-center
-  | Register
+  | Sign up
 .row
   .col-md-6.offset-md-3.form-apply
-    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = form_for(resource, as: resource_name, url: register_2_path) do |f|
       = render 'shared/error_messages', object: resource
       .card
         .card-body
@@ -22,11 +22,11 @@ h2.p-3.text-center
                 = @minimum_password_length
                 |  characters minimum)
             br
-            = f.password_field :password, required: true, autocomplete: "new-password", class: 'form-control'
+            = f.password_field :password, autocomplete: "new-password", class: 'form-control'
           .field
             = f.label :password_confirmation
             br
-            = f.password_field :password_confirmation, required: true, autocomplete: "new-password", class: 'form-control'
+            = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control'
           .field
             = f.label :cv, "CV"
             br

@@ -4,11 +4,18 @@ header
       = link_to (image_tag "logo.png", alt: "logo"), root_path, id: "logo"
       #navbarExample01.collapse.navbar-collapse
         ul.navbar-nav.ms-auto.mb-2.mb-lg-0
-          li.nav-item.active
-            = link_to "Login", '#'
-          li.nav-item
-            = link_to "Register", register_1_path
-          li.nav-item
-            = link_to "Favourite", '#'
-          li.nav-item
-            = link_to "History", '#'
+          - if user_signed_in?
+            li
+              = link_to "Profile", my_path
+            li
+              = link_to "Favourite",'#'
+            li
+              = link_to "History", '#'
+            li
+              = link_to('Logout', destroy_user_session_path, method: :delete)
+          - else
+            li
+              = link_to('Login', login_path)
+            li.nav-item
+              = link_to "Register", register_1_path
+          

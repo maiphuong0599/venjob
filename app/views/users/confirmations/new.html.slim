@@ -1,5 +1,5 @@
 h2.p-3.text-center
-  | Register
+  | Resend confirmation instructions
 .row
   .col-md-6.offset-md-3.form-apply
     = form_for(resource, as: resource_name, url: register_2_path) do |f|
@@ -9,6 +9,6 @@ h2.p-3.text-center
           .field
             = f.label :email
             br
-            = f.email_field :email, autofocus: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'form-control'
+            = f.email_field :email, autofocus: true, required: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'form-control'
           .actions.p-3.text-center
             = f.submit "Confirm your email", class: "btn btn-primary"

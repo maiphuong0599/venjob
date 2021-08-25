@@ -1,3 +1,23 @@
-p
-  | helloo
-  =@user.name
+h2.p-3.text-center
+  | My Page
+.row
+  .col-md-6.offset-md-3.form-apply
+    = form_with(model: @user, local:true) do |f|
+      .card
+        .card-body
+          .field
+            = f.label :email
+            br
+            = f.email_field :email, required: true, autofocus: true, autocomplete: "email", class: 'form-control'
+          .field
+            = f.label :name, "Full Name"
+            br
+            = f.text_field :name, required: true, length: { maximum: 200 }, class: 'form-control'
+          .field
+            -if @user.cv.attached?
+              = f.label :cv, "CV" 
+              br
+              = link_to @user.cv.filename, rails_blob_path(@user.cv, disposition: 'attachment')
+          .span.p-2.text-center
+            = link_to "Update", my_info_path, class: "btn btn-primary btn-space"
+            = link_to "My Jobs", "#", class: "btn btn-primary btn-space"

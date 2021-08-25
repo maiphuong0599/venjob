@@ -8,12 +8,16 @@ Rails.application.routes.draw do
   get 'apply', to: 'apply_jobs#new'
   post 'confirm', to: 'apply_jobs#confirm'
   post 'done', to: 'apply_jobs#done'
-  devise_for :users, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations' }
-  resources :users, :only => [:show]
-  post '/my', to: 'users#show'
+  devise_for :users, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations',
+                                    passwords: 'users/passwords', sessions: 'users/sessions' }
+  resources :user
+  get '/my', to: 'users#show'
   devise_scope :user do
-    get 'register/1', to: 'devise/confirmations#new'
-    post 'register/2', to: 'devise/confirmations#create'
-    get 'registration/3', to: 'devise/registrations#new'
+    get 'register/1', to: 'users/registrations#new'
+    get 'register/2', to: 'users/registrations#show'
+    get 'my/info', to: 'users/registrations#edit'
+    get 'forgot_password', to: 'users/passwords#new'
+    get 'reset_password', to: 'users/passwords#edit'
+    get 'login', to: 'users/sessions#new'
   end
 end

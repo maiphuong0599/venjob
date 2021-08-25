@@ -1,12 +1,7 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+
   def show
-    @user = User.new(profile_params)
-    @user.save
-    flash[:notice] = "Your user account has been created!"
-  end
-
-
-  def profile_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :cv)
+    @user = current_user
   end
 end
