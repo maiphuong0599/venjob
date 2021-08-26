@@ -41,6 +41,6 @@ h2.p-3.text-center
           .field
             = f.label :cv, "CV"
             br
-            = f.file_field :cv, accept: User::VALID_FILE_UPLOAD, size: { less_than: 5.megabytes, message:"should be less than 5MB" }
+            = f.file_field :cv, accept: 'application/pdf', size: { less_than: 5.megabytes, message:"should be less than 5MB" }
           .actions.p-2.text-center
             = f.submit "Update", class: "btn btn-primary"
