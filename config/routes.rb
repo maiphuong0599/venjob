@@ -9,7 +9,6 @@ Rails.application.routes.draw do
   post 'confirm', to: 'apply_jobs#confirm'
   post 'done', to: 'apply_jobs#done'
   devise_for :users, skip: %i[sessions registrations passwords], controllers: { confirmations: 'users/confirmations' }
-  resources :users, only: :show
   get '/my', to: 'users#show'
   devise_scope :user do
     get 'register/1', to: 'users/registrations#new', as: :new_user_registration

@@ -1,5 +1,7 @@
 @import "bootstrap";
+@import "flash";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
 #logo {
   float: left;
   margin-right: 10px;
@@ -159,30 +161,23 @@ footer {
   }
 }
 
-.alert-error {
-  background-color: #f2dede;
-  border-color: #eed3d7;
-  color: #b94a48;
-  text-align: left;
-}
-
-.alert-alert {
-  background-color: #f2dede;
-  border-color: #eed3d7;
-  color: #b94a48;
+.alert-error,  .alert-alert {
+  background-color: $background-error-alert-color;
+  border-color: $border-error-alert-color;
+  color: $error-alert-color;
   text-align: left;
 }
 
 .alert-success {
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-  color: #468847;
+  background-color: $background-success-notice-color;
+  border-color: $border-success-notice-color;
+  color: $success-notice-color;
   text-align: left;
 }
 
 .alert-notice {
-  background-color: #dff0d8;
-  border-color: #d6e9c6;
-  color: #468847;
+  background-color: $background-success-notice-color;
+  border-color: $border-success-notice-color;
+  color: $success-notice-color;
   text-align: left;
 }

@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :favorite_jobs, dependent: :destroy
   has_many :history_jobs, dependent: :destroy
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
+         :recoverable, :rememberable, :validatable,
          :confirmable
   validates :name, length: { maximum: 200 }
   validates :email, length: { maximum: 200 }, uniqueness: true
