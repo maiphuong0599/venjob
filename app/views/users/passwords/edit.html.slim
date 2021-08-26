@@ -8,14 +8,6 @@ h2.p-3.text-center
         .card-body
           = f.hidden_field :reset_password_token
           .field
-            = f.label :email
-            br
-            = f.email_field :email, disabled: true, autofocus: true, autocomplete: "email", class: 'form-control'
-          - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-            div
-              | Currently waiting confirmation for: 
-              = resource.unconfirmed_email
-          .field
             = f.label :password, "New password"
             br
             - if @minimum_password_length

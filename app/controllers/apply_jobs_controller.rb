@@ -1,5 +1,7 @@
 class ApplyJobsController < ApplicationController
   include ApplicationHelper
+
+  before_action :authenticate_user!
   def new
     job = Job.find_by(id: params[:job_id]) or not_found
 

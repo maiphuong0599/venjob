@@ -8,20 +8,19 @@ Rails.application.routes.draw do
   get 'apply', to: 'apply_jobs#new'
   post 'confirm', to: 'apply_jobs#confirm'
   post 'done', to: 'apply_jobs#done'
-  devise_for :users, controllers: { registrations: 'users/registrations', confirmations: 'users/confirmations',
-                                    passwords: 'users/passwords', sessions: 'users/sessions' }, skip: %i[sessions registrations passwords]
-  resources :user
+  devise_for :users, skip: %i[sessions registrations passwords], controllers: { confirmations: 'users/confirmations' }
+  resources :users, only: :show
   get '/my', to: 'users#show'
   devise_scope :user do
     get 'register/1', to: 'users/registrations#new', as: :new_user_registration
     get 'register/2', to: 'users/registrations#show'
     get 'my/info', to: 'users/registrations#edit', as: :edit_user_registration
-    match '/my', to: 'devise/registrations#create', as: :user_registration, via: [:post]
-    match '/my', to: 'devise/registrations#update', via: %i[put patch]
+    match '/my', to: 'users/registrations#create', as: :user_registration, via: [:post]
+    match '/my', to: 'users/registrations#update', via: %i[put patch]
     get 'forgot_password', to: 'users/passwords#new', as: :new_user_password
     get 'reset_password', to: 'users/passwords#edit', as: :edit_user_password
     match 'reset_password', to: 'users/passwords#update', via: %i[put patch]
-    match 'reset_password', to: 'users/passwords#create', as: :user_password, via: [:post]
+    post 'reset_password', to: 'users/passwords#create', as: :user_password
     get 'login', to: 'users/sessions#new', as: :new_user_session
     post 'login', to: 'users/sessions#create', as: :user_session
     delete 'logout', to: 'users/sessions#destroy', as: :destroy_user_session, via: Devise.mappings[:user].sign_out_via
