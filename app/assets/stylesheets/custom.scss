@@ -1,5 +1,7 @@
 @import "bootstrap";
+@import "colors";
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+
 #logo {
   float: left;
   margin-right: 10px;
@@ -157,4 +159,18 @@ footer {
   .form-control {
     color: $danger;
   }
+}
+
+.alert-error, .alert-alert {
+  background-color: $background-error-alert-color;
+  border-color: $border-error-alert-color;
+  color: $error-alert-color;
+  text-align: left;
+}
+
+.alert-success, .alert-notice {
+  background-color: $background-success-notice-color;
+  border-color: $border-success-notice-color;
+  color: $success-notice-color;
+  text-align: left;
 }

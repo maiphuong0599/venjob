@@ -1,5 +1,7 @@
 class ApplyJobsController < ApplicationController
   include ApplicationHelper
+
+  before_action :authenticate_user!
   def new
     job = Job.find_by(id: params[:job_id]) or not_found
 
@@ -17,7 +19,7 @@ class ApplyJobsController < ApplicationController
 
   def confirm
     @apply_job = ApplyJob.new(apply_params)
-    @apply_job.user_id = User.find_by(id: 1).id
+    @apply_job.user_id = current_user.id
     @apply_job.validate
     if @apply_job.cv.attached? && @apply_job.errors[:cv].empty?
       @blob = ActiveStorage::Blob.create_and_upload!(
@@ -41,7 +43,7 @@ class ApplyJobsController < ApplicationController
 
   def done
     @apply_job = ApplyJob.new(apply_params)
-    @apply_job.user_id = User.find_by(id: 1).id
+    @apply_job.user_id = current_user.id
     @job = Job.latest_jobs.find(apply_params[:job_id])
     @apply_job.cv = ActiveStorage::Blob.find(session[:blob_id])
     if @apply_job.save

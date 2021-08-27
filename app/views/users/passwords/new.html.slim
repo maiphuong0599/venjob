@@ -1,0 +1,14 @@
+h2.p-3.text-center
+  | Forgot your password
+.row
+  .col-md-6.offset-md-3.form-apply
+    = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+      = render "shared/error_messages", object: resource
+      .card
+        .card-body
+          .field
+            = f.label :email
+            br
+            = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control'
+          .actions.p-3.text-center
+            = f.submit "Confirm you email", class: "btn btn-primary"

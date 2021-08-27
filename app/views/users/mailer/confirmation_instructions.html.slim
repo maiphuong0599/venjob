@@ -1,0 +1,8 @@
+p
+  | Welcome 
+  = @email
+  | !
+p
+  | You're on your way! Let's confirm your email address. By clicking on the following link, you are confirming your email address and agreeing to VeNJOB's Terms of Service.
+p
+  = link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token)
