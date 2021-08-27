@@ -9,11 +9,11 @@ h2.p-3.text-center
           .field
             = f.label :name, "Full Name"
             br
-            = f.text_field :name, required: true, length: { maximum: 200 }, class: 'form-control'
+            = f.text_field :name, required: true, autofocus: true, length: { maximum: 200 }, class: 'form-control'
           .field
             = f.label :email
             br
-            = f.email_field :email, required: true, length: { maximum: 200 }, autofocus: true, autocomplete: "email", class: 'form-control'
+            = f.email_field :email, required: true, length: { maximum: 200 }, autocomplete: "email", class: 'form-control'
           .field
             = f.label :password
             - if @minimum_password_length
