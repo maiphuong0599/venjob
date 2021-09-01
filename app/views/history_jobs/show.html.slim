@@ -9,7 +9,7 @@ h3.p-3.text-center
         = f.radio_button :job_id, history.job.id, class: "form-check-input mt-0"
       .col-11.p-3.border.card-body.text-dark
         h5.mb-1
-          = history.job.title
+          = link_to history.job.title, detail_path(history.job.slug)
         p.mb-1
           i.fas.fa-dollar-sign.m-1
           | Lương: 

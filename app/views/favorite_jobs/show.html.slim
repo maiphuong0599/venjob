@@ -11,7 +11,7 @@ h3.p-3.text-center
         = f.radio_button :job_id, favorite.job.id, class: "form-check-input mt-0"
       .col-9.p-3.border.card-body.text-dark
         h5.mb-1
-          = favorite.job.title
+          = link_to favorite.job.title, detail_path(favorite.job.slug)
         p.mb-1
           i.fas.fa-dollar-sign.m-1
           | Lương: 
