@@ -24,4 +24,8 @@ module ApplicationHelper
   def render_404
     render file: "#{Rails.root}/public/404.html", status: :not_found
   end
+
+  def favorite_text
+    return @favorite_exists ? 'Unfavorite' : 'Favorite'
+  end
 end

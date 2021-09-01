@@ -17,7 +17,6 @@ h2.text-center
     p.my-1
       = f.label :cv, "Your CV" 
       br
-      = f.hidden_field :id, value: @blob.id
       = @apply_job.cv.filename
     .span.p-3.text-center
       = link_to "Back", apply_path(job_id: @apply_job.job_id), class: "btn btn-primary btn-space"

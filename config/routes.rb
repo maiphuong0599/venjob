@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   get 'apply', to: 'apply_jobs#new'
   post 'confirm', to: 'apply_jobs#confirm'
   post 'done', to: 'apply_jobs#done'
+  get 'favorite', to: 'favorite_jobs#update', as: 'favorite_update'
+  get 'favorite2', to: 'favorite_jobs#show', as: 'favorite'
+  delete 'unfavorite', to: 'favorite_jobs#destroy'
+  get 'history', to: 'history_jobs#show', as: 'history'
   devise_for :users, skip: %i[sessions registrations passwords], controllers: { confirmations: 'users/confirmations' }
   get '/my', to: 'users#show'
   devise_scope :user do
