@@ -19,7 +19,7 @@ h3.p-3.text-center
           = history.job.cities.map(&:name).uniq.join(' | ')
         p.mb-1
           = truncate(history.job.overview, length: 250)
-  -if @histories.any?       
+  -if @histories.any?
     .span.p-3.text-center
       = f.submit "Apply job", class: "btn btn-primary btn-lg"
   -else

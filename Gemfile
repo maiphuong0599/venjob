@@ -4,7 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-# gem 'bullet', group: 'development'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 gem 'bootstrap', '~> 5.0.1'
 gem 'nokogiri', '~> 1.11', '>= 1.11.7'
@@ -15,7 +14,7 @@ gem 'babosa'
 gem 'active_storage_validations'
 gem 'mini_magick', '>= 4.9.5'
 gem 'devise'
-gem 'bullet', group: 'development'
+
 # Use sqlite3 as the database for Active Record
 gem 'mysql2', '~> 0.5.3'
 # Use Puma as the app server
@@ -54,6 +53,7 @@ group :development do
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'bullet'
 end
 
 group :test do

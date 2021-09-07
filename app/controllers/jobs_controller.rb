@@ -24,16 +24,20 @@ class JobsController < ApplicationController
   private
 
   def history_action
-    history = JobsQuery.new.find_history(job_params, current_user)
-    if history == []
+    history = job_query.find_history(job_params, current_user)
+    if history.empty?
       HistoryJob.create(job: Job.find(params[:job_slug]), user: current_user)
     else
-      history.touch_all(:created_at)
+      history.touch_all(:updated_at)
     end
     HistoryJob.first.destroy if HistoryJob.count > 20
   end
 
   def job_params
     params.permit(:job_slug)
+  end
+
+  def job_query
+    @job_query ||= HistoryQuery.new
   end
 end
