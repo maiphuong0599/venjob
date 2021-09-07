@@ -1,5 +1,5 @@
 class HistoryJobsController < ApplicationController
   def show
-    @histories = HistoryJob.order('created_at DESC')
+    @histories = JobsQuery.new.order_history(current_user)
   end
 end

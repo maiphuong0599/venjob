@@ -14,23 +14,26 @@ class JobsController < ApplicationController
     end
     @total = jobs.count
     @jobs = jobs.latest_jobs.page(params[:page])
-    @favorite_exists = FavoriteJob.where(job: @job, user: current_user) == [] ? false : true
   end
 
   def show
     @job = Job.latest_jobs.find_by(slug: params[:job_slug])
-    @favorite_exists = FavoriteJob.where(job: @job, user: current_user) == [] ? false : true
+    @favorite_exists = FavoriteJob.where(job: @job, user: current_user) != []
   end
 
   private
 
   def history_action
-    history = HistoryJob.where(job_id: @job.id, user_id: current_user.id)
+    history = JobsQuery.new.find_history(job_params, current_user)
     if history == []
-      HistoryJob.create(job_id: @job.id, user_id: current_user.id)
+      HistoryJob.create(job: Job.find(params[:job_slug]), user: current_user)
     else
       history.touch_all(:created_at)
     end
     HistoryJob.first.destroy if HistoryJob.count > 20
+  end
+
+  def job_params
+    params.permit(:job_slug)
   end
 end

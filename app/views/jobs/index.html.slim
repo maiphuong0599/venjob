@@ -13,7 +13,7 @@
   .job-list
     - @jobs.each do |job| 
       .row.bg-white
-        .col-10.p-3.border.card-body.text-dark
+        .col-10.p-3.card-body.text-dark
           h5.mb-1
             = link_to job.title, detail_path(job.slug)
           p.mb-1
@@ -27,7 +27,7 @@
             = link_to job.cities.map(&:name).uniq.join(' | '), "#"
           p.mb-1
             = truncate(job.overview, length: 250)
-        .col-sm-2.p-3.border.favourite
+        .col-sm-2.p-3.favourite
           = link_to favorite_text, favorite_update_path(job_id: job.id), id: 'favorite_link', remote: true, class: "btn btn-outline-primary"
   h6.offset-md-4.px-5
     = page_entries_info @jobs

@@ -23,9 +23,13 @@ h3.p-3.text-center
           = truncate(favorite.job.overview, length: 250)
       .col-sm-2.p-3.border.favourite
         = link_to "Remove", unfavorite_path(job_id: favorite.job.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-primary"
-  h6.offset-md-4.p-2
-    = page_entries_info @favorites
-  .col-6.offset-md-5.text-center
-    = paginate @favorites, window: 1
-  .span.p-3.text-center
-    = f.submit "Apply job", class: "btn btn-primary btn-lg"
+  -if @favorites.any?
+    h6.offset-md-4.p-2
+      = page_entries_info @favorites
+    .col-6.offset-md-5.text-center
+      = paginate @favorites, window: 1
+    .span.p-3.text-center
+      = f.submit "Apply job", class: "btn btn-primary btn-lg"
+  -else
+    h4.text-center
+      | You haven't favorite jobs
