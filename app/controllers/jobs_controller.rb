@@ -1,5 +1,4 @@
 class JobsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
   after_action :history_action, only: [:show]
 
   def index
