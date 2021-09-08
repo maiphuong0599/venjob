@@ -1,6 +1,7 @@
 class JobsController < ApplicationController
-  after_action :history_action, only: [:show]
+  include ApplicationHelper
 
+  after_action :history_action, only: [:show]
   def index
     if params[:city_slug].present?
       city = City.find_by(slug: params[:city_slug])
@@ -16,18 +17,18 @@ class JobsController < ApplicationController
   end
 
   def show
-    @job = Job.latest_jobs.find_by(slug: params[:job_slug])
-    @favorite_exists = FavoriteJob.where(job: @job, user: current_user) != []
+    @job = Job.find_by(slug: params[:job_slug]) or not_found
+    @favorite_exists = !FavoriteJob.find_by(job: @job, user: current_user).nil?
   end
 
   private
 
   def history_action
-    history = job_query.find_history(job_params, current_user)
-    if history.empty?
+    history = history_query.find_history(job_params, current_user)
+    if history.nil?
       HistoryJob.create(job: Job.find(params[:job_slug]), user: current_user)
     else
-      history.touch_all(:updated_at)
+      history.touch(:updated_at)
     end
     HistoryJob.first.destroy if HistoryJob.count > 20
   end
@@ -36,7 +37,7 @@ class JobsController < ApplicationController
     params.permit(:job_slug)
   end
 
-  def job_query
-    @job_query ||= HistoryQuery.new
+  def history_query
+    @history_query ||= HistoryQuery.new
   end
 end

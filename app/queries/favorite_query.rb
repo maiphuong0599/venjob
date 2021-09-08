@@ -4,11 +4,11 @@ class FavoriteQuery
   end
 
   def find_favorite(params, current_user)
-    @favorites.where(job: Job.find(params[:job_id]), user: current_user)
+    @favorites.find_by(job: Job.find(params[:job_id]), user: current_user)
   end
 
   def find_favorite_slug(params, current_user)
-    @favorites.where(job: Job.find(params[:job_slug]), user: current_user)
+    @favorites.find_by(job: Job.find(params[:job_slug]), user: current_user)
   end
 
   def order_favorite(current_user)

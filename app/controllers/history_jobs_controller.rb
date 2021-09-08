@@ -1,11 +1,11 @@
 class HistoryJobsController < ApplicationController
   def index
-    @histories = job_query.order_history(current_user)
+    @histories = history_query.order_history(current_user)
   end
 
   private
 
-  def job_query
-    @job_query ||= HistoryQuery.new
+  def history_query
+    @history_query ||= HistoryQuery.new
   end
 end

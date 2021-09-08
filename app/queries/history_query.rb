@@ -8,6 +8,6 @@ class HistoryQuery
   end
 
   def find_history(params, current_user)
-    @histories.where(job: Job.find(params[:job_slug]), user: current_user)
+    @histories.find_by(job: Job.find(params[:job_slug]), user: current_user)
   end
 end

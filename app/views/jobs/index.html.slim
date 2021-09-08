@@ -28,7 +28,10 @@
           p.mb-1
             = truncate(job.overview, length: 250)
         .col-sm-2.p-3.favourite
-          = link_to favorite_text, favorite_update_path(job_id: job.id), id: 'favorite_link', remote: true, class: "btn btn-outline-primary"
+          -unless current_user.favorite_jobs.exists?(job.id)
+            = link_to favorite_text, favorite_update_path(job_id: job.id), id: 'favorite_link', remote: true, class: "btn btn-outline-primary btn-lg"
+          -else
+            = link_to favorite_text, favorite_update_path(job_id: job.id), class: "btn btn-outline-primary btn-lg"
   h6.offset-md-4.px-5
     = page_entries_info @jobs
   h6.offset-md-4
