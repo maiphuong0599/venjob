@@ -28,7 +28,7 @@
           p.mb-1
             = truncate(job.overview, length: 250)
         .col-sm-2.p-3.favourite
-          = render partial: "favorite_jobs/favorite", locals: {job: job}
+          = render partial: "favorite_jobs/favorite", locals: { job: job }
   h6.offset-md-4.px
     = page_entries_info @jobs
   h6.offset-md-4
