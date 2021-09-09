@@ -5,9 +5,9 @@ h3.p-3.text-center
 = form_with(url: apply_path, method: :get) do |f|
   - @histories.each do |history|
     .row.bg-white
-      .col-1.p-3.border.card-body.text-dark.text-center
-        = f.radio_button :job_id, history.job.id, class: "form-check-input mt-0"
-      .col-11.p-3.border.card-body.text-dark
+      .col-1.p-3.card-body.text-dark.text-center.align-self-center
+        = f.radio_button :job_id, history.job.id, required: true, class: "form-check-input mt-0"
+      .col-11.p-3.align-self-center
         h5.mb-1
           = link_to history.job.title, detail_path(history.job.slug)
         p.mb-1

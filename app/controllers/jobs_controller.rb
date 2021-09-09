@@ -30,7 +30,7 @@ class JobsController < ApplicationController
     else
       history.touch(:updated_at)
     end
-    HistoryJob.first.destroy if HistoryJob.count > 20
+    HistoryJob.first.destroy if HistoryJob.count > HistoryJob::LIMIT_HISTORY
   end
 
   def job_params

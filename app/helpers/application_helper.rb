@@ -26,6 +26,6 @@ module ApplicationHelper
   end
 
   def favorite_text
-    return @favorite_exists ? 'Unfavorite' : 'Favorite'
+    @favorite_exists ? 'Unfavorite' : 'Favorite'
   end
 end
