@@ -25,11 +25,7 @@ module ApplicationHelper
     render file: "#{Rails.root}/public/404.html", status: :not_found
   end
 
-  def favorite_text
-    @favorite_exists ? 'Unfavorite' : 'Favorite'
-  end
-
-  def check_favorite_exists(input)
-    @favorite_exists = !FavoriteJob.find_by(job: input, user: current_user).nil?
+  def favorite_text(job)
+    FavoriteJob.find_by(job: job, user: current_user).present? ? 'Unfavorite' : 'Favorite'
   end
 end
