@@ -19,7 +19,6 @@ class JobsController < ApplicationController
 
   def show
     @job = Job.find_by(slug: params[:job_slug]) or not_found
-    favorite_text(@job)
   end
 
   private
