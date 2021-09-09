@@ -1,0 +1,35 @@
+- provide :title, 'Favorite jobs'
+
+h3.p-3.text-center
+  | Favorite Jobs
+.d-flex.justify-content-center
+  = paginate @favorites, window: 1
+= form_with(url: apply_path, method: :get) do |f|
+  - @favorites.each do |favorite|
+    .row.bg-white
+      .col-1.p-3.card-body.text-dark.text-center.align-self-center
+        = f.radio_button :job_id, favorite.job.id, required: true, class: "form-check-input mt-0"
+      .col-9.p-3.align-self-center
+        h5.mb-1
+          = link_to favorite.job.title, detail_path(favorite.job.slug)
+        p.mb-1
+          i.fas.fa-dollar-sign.m-1
+          | Lương: 
+          = favorite.job.salary
+        p.mb-1
+          i.fas.fa-map-marker-alt.m-1
+          = favorite.job.cities.map(&:name).uniq.join(' | ')
+        p.mb-1
+          = truncate(favorite.job.overview, length: 250)
+      .col-2.p-3.text-center.align-self-center
+        = link_to "Remove", unfavorite_path(job_id: favorite.job.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-primary"
+  -if @favorites.any?
+    .d-flex.justify-content-center.p-2
+      = page_entries_info @favorites
+    .d-flex.justify-content-center
+      = paginate @favorites, window: 1
+    .span.p-3.text-center
+      = f.submit "Apply job", class: "btn btn-primary btn-lg"
+  -else
+    h4.text-center
+      | You haven't favorite jobs

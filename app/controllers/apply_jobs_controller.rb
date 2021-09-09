@@ -60,6 +60,6 @@ class ApplyJobsController < ApplicationController
   private
 
   def apply_params
-    params.require(:apply_job).permit(:name, :email, :cv, :job_id, :id)
+    params.require(:apply_job).permit(:name, :email, :cv, :job_id)
   end
 end

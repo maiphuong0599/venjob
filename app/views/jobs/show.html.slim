@@ -50,7 +50,5 @@
 .row.bg-white.p-4
   .col.text-end
     = link_to "Apply this Job", apply_path(job_id: @job.id), class: "btn btn-outline-primary btn-lg"
-  .col
-    = link_to "Favourite", "#", class: "btn btn-outline-primary btn-lg"
-
-  
+  .col.text-start 
+    = render partial: "favorite_jobs/favorite", locals: { job: @job }

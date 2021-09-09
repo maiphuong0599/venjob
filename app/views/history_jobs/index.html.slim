@@ -1,0 +1,27 @@
+- provide :title, 'History jobs'
+
+h3.p-3.text-center
+  | History Jobs
+= form_with(url: apply_path, method: :get) do |f|
+  - @histories.each do |history|
+    .row.bg-white
+      .col-1.p-3.card-body.text-dark.text-center.align-self-center
+        = f.radio_button :job_id, history.job.id, required: true, class: "form-check-input mt-0"
+      .col-11.p-3.align-self-center
+        h5.mb-1
+          = link_to history.job.title, detail_path(history.job.slug)
+        p.mb-1
+          i.fas.fa-dollar-sign.m-1
+          | Lương: 
+          = history.job.salary
+        p.mb-1
+          i.fas.fa-map-marker-alt.m-1
+          = history.job.cities.map(&:name).uniq.join(' | ')
+        p.mb-1
+          = truncate(history.job.overview, length: 250)
+  -if @histories.any?
+    .span.p-3.text-center
+      = f.submit "Apply job", class: "btn btn-primary btn-lg"
+  -else
+    h4.text-center
+      | You haven't history jobs

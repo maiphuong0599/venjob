@@ -24,4 +24,8 @@ module ApplicationHelper
   def render_404
     render file: "#{Rails.root}/public/404.html", status: :not_found
   end
+
+  def favorite_text(job)
+    FavoriteJob.find_by(job: job, user: current_user).present? ? 'Unfavorite' : 'Favorite'
+  end
 end
