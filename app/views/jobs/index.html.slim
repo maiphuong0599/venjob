@@ -12,7 +12,7 @@
     = paginate @jobs, window: 1
   .job-list
     - @jobs.each do |job| 
-      = check_favorite_exists(job)
+      = hidden_field :status, check_favorite_exists(job)
       .row.bg-white
         .col-10.p-3.card-body.text-dark
           h5.mb-1
