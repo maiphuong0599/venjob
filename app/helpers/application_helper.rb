@@ -28,4 +28,8 @@ module ApplicationHelper
   def favorite_text
     @favorite_exists ? 'Unfavorite' : 'Favorite'
   end
+
+  def check_favorite_exists(input)
+    @favorite_exists = !FavoriteJob.find_by(job: input, user: current_user).nil?
+  end
 end

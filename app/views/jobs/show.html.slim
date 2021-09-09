@@ -52,6 +52,6 @@
     = link_to "Apply this Job", apply_path(job_id: @job.id), class: "btn btn-outline-primary btn-lg"
   .col.text-start
     -if user_signed_in?
-      = link_to favorite_text, favorite_update_path(job_id: @job.id), id: 'favorite_link', remote: true, class: "btn btn-outline-primary btn-lg"
+      = link_to favorite_text, favorite_update_path(job_id: @job.id), id: "favorite-#{@job.id}", remote: true, class: "btn btn-outline-primary btn-lg"
     -else
       = link_to favorite_text, favorite_update_path(job_id: @job.id), class: "btn btn-outline-primary btn-lg"

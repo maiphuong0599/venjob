@@ -11,6 +11,7 @@ class JobsController < ApplicationController
       industry = Industry.find_by(slug: params[:industry_slug])
       jobs = industry.jobs
       @result = industry.name
+
     end
     @total = jobs.count
     @jobs = jobs.latest_jobs.page(params[:page])
@@ -18,7 +19,7 @@ class JobsController < ApplicationController
 
   def show
     @job = Job.find_by(slug: params[:job_slug]) or not_found
-    @favorite_exists = !FavoriteJob.find_by(job: @job, user: current_user).nil?
+    check_favorite_exists(@job)
   end
 
   private
