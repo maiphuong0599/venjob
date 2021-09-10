@@ -2,6 +2,10 @@ class ApplyJobsController < ApplicationController
   include ApplicationHelper
 
   before_action :authenticate_user!
+  def index
+    @applied_jobs = applied_jobs_query.order_applied_jobs(current_user).page(params[:page])
+  end
+
   def new
     job = Job.find_by(id: params[:job_id]) or not_found
 
@@ -61,5 +65,9 @@ class ApplyJobsController < ApplicationController
 
   def apply_params
     params.require(:apply_job).permit(:name, :email, :cv, :job_id)
+  end
+
+  def applied_jobs_query
+    @applied_jobs_query ||= AppliedQuery.new
   end
 end

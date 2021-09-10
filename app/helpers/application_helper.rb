@@ -2,7 +2,7 @@ module ApplicationHelper
   def format_datetime(input)
     return if input.nil?
 
-    input.strftime('%d/%m/%Y')
+    input.strftime('%H:%M : %d/%m/%Y')
   end
 
   def class_active(link_path)
