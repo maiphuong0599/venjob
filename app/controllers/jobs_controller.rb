@@ -21,6 +21,19 @@ class JobsController < ApplicationController
     @job = Job.find_by(slug: params[:job_slug]) or not_found
   end
 
+  def search
+    @keyword = job_params[:search].gsub!(/[^[:alnum:]]/, ' ')
+    solr = RSolr.connect url: 'http://localhost:8983/solr/VeNJOB'
+    response = solr.get 'select', params: {
+      q: "city: #{@keyword}* or title: #{@keyword}* or industry: #{@keyword}* or company: #{@keyword}*",
+      start: 0,
+      rows: 2_147_483_647
+    }
+    result = response['response']['docs']
+    @result_search = Kaminari.paginate_array(result).page(params[:page])
+    @total = result.count
+  end
+
   private
 
   def history_action
@@ -34,7 +47,7 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.permit(:job_slug)
+    params.permit(:job_slug, :search)
   end
 
   def history_query

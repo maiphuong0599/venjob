@@ -28,4 +28,8 @@ module ApplicationHelper
   def favorite_text(job)
     FavoriteJob.find_by(job: job, user: current_user).present? ? 'Unfavorite' : 'Favorite'
   end
+
+  def search(input)
+    Job.find_by(id: input['id'])
+  end
 end
