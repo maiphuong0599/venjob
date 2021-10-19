@@ -23,15 +23,9 @@ class JobsController < ApplicationController
 
   def search
     @keyword = job_params[:search].gsub!(/[^[:alnum:]]/, ' ')
-    solr = RSolr.connect url: 'http://localhost:8983/solr/VeNJOB'
-    response = solr.get 'select', params: {
-      q: "city: #{@keyword}* or title: #{@keyword}* or industry: #{@keyword}* or company: #{@keyword}*",
-      start: 0,
-      rows: 2_147_483_647
-    }
-    result = response['response']['docs']
-    @result_search = Kaminari.paginate_array(result).page(params[:page])
-    @total = result.count
+    search_param = SolrSearch.new.search(@keyword)
+    @result_search = Kaminari.paginate_array(search_param).page(params[:page])
+    @total = search_param.count
   end
 
   private

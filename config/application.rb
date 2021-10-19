@@ -17,6 +17,7 @@ module VeNJOB
     # in config/environments, which are processed later.
     #
     config.time_zone = 'Hanoi'
+    config.eager_load_paths << "#{Rails.root}/lib/solr"
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

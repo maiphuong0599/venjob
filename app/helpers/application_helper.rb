@@ -30,6 +30,6 @@ module ApplicationHelper
   end
 
   def search(input)
-    Job.find_by(id: input['id'])
+    Job.find_by(id: input['job_id'])
   end
 end
