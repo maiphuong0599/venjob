@@ -23,9 +23,9 @@ class JobsController < ApplicationController
 
   def search
     @keyword = job_params[:search].gsub!(/[^[:alnum:]]/, ' ')
-    search_param = SolrSearch.new.search(@keyword)
-    @result_search = Kaminari.paginate_array(search_param).page(params[:page])
-    @total = search_param.count
+    response = SolrSearch.new.search(@keyword)
+    @result_search = Kaminari.paginate_array(response).page(params[:page])
+    @total = response.count
   end
 
   private

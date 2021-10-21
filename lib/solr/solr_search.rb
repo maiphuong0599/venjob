@@ -4,11 +4,9 @@ class SolrSearch
   end
 
   def search(keyword)
-    response = @solr.get 'select', params: {
-      q: "cities_name: #{keyword}* or title: #{keyword}* or industries_name: #{keyword}* or company_name: #{keyword}*",
-      fl: %w[job_id slug],
-      start: 0,
-      rows: 2_147_483_647
+    response = @solr.paginate 1, 2_147_483_647, 'select', params: {
+      q: "cities_name: #{keyword} or title: #{keyword} or industries_name: #{keyword}* or company_name: #{keyword}*",
+      fl: %w[job_id slug]
     }
     response['response']['docs']
   end
@@ -24,13 +22,13 @@ class SolrSearch
       cities = record.cities.uniq.map(&:name)
       industries = record.industries.uniq.map(&:name)
       slug = record.slug
-
       @solr.add(job_id: job_id, title: title, company_name: company_name, cities_name: cities,
                 industries_name: industries, slug: slug)
       @solr.commit
+
     rescue StandardError => error
-      logger.error "The job has error: #{job_id}"
-      logger.error error
+      logger.error("The job has error: #{job_id}")
+      logger.error(error)
       next
     end
     logger.info "End add data at: #{Time.current}"
