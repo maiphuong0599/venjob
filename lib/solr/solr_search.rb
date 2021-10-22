@@ -3,12 +3,11 @@ class SolrSearch
     @solr = RSolr.connect url: 'http://localhost:8983/solr/VeNJOB'
   end
 
-  def search(keyword)
-    response = @solr.paginate 1, 2_147_483_647, 'select', params: {
-      q: "cities_name: #{keyword} or title: #{keyword} or industries_name: #{keyword}* or company_name: #{keyword}*",
-      fl: %w[job_id slug]
+  def search(keyword, current_page)
+    @solr.paginate current_page, 20, 'select', params: {
+      q: "cities_name: #{keyword} or title: #{keyword} or industries_name: #{keyword} or company_name: #{keyword}",
+      fl: 'job_id'
     }
-    response['response']['docs']
   end
 
   def add_data
