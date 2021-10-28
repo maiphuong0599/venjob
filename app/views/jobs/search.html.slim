@@ -1,0 +1,39 @@
+.container.p-3
+  h5.fw-normal
+    | Total: 
+    = pluralize(@total, 'job')
+  h5.fw-normal 
+    | Result for: 
+    = @keyword
+  .d-flex.justify-content-center.p-2
+    = paginate @jobs, window: 1
+  .job-list
+    - @jobs.each do |job| 
+      .row.bg-white
+        .col-10.p-3.card-body.text-dark
+          h5.mb-1
+            = link_to job.title, detail_path(job.slug)
+          p.mb-1
+            = job.company.name
+          p.mb-1
+            i.fas.fa-dollar-sign.m-1
+            | Lương: 
+            = job.salary
+          p.mb-1
+            i.fas.fa-map-marker-alt.m-1
+            = job.cities.map(&:name).uniq.join(' | ')
+          p.mb-1
+            i.fas.fa-map-marker-alt.m-1
+            = job.industries.map(&:name).uniq.join(' | ')
+          p.mb-1
+            = truncate(job.overview, length: 250)
+        .col-sm-2.p-3.favourite
+          = render partial: "favorite_jobs/favorite", locals: { job: job }
+  -if @jobs.any?
+    .d-flex.justify-content-center.p-2
+      = page_entries_info @jobs
+    .d-flex.justify-content-center.p-2
+      = paginate @jobs, window: 1
+  -else
+    h4.text-center
+      | Not have any jobs you need
