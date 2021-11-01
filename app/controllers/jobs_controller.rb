@@ -21,6 +21,15 @@ class JobsController < ApplicationController
     @job = Job.find_by(slug: params[:job_slug]) or not_found
   end
 
+  def search
+    @keyword = job_params[:search].gsub!(/[^[:alnum:]]/, ' ')
+    response = SolrSearch.new.search(@keyword, params[:page])
+    job_ids = response['response']['docs'].map { |job| job['job_id'] }
+    jobs = Job.latest_jobs.find(job_ids)
+    @total = response['response']['numFound']
+    @jobs = Kaminari.paginate_array(jobs, total_count: @total).page(params[:page])
+  end
+
   private
 
   def history_action
@@ -34,7 +43,7 @@ class JobsController < ApplicationController
   end
 
   def job_params
-    params.permit(:job_slug)
+    params.permit(:job_slug, :search)
   end
 
   def history_query

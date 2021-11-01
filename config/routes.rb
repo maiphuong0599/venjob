@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   delete 'unfavorite', to: 'favorite_jobs#destroy'
   get 'history', to: 'history_jobs#index', as: 'history'
   get '/my/jobs', to: 'apply_jobs#index', as: 'applied_job'
+  get 'jobs', to: 'jobs#search', as: 'search'
   devise_for :users, path: 'users', skip: %i[sessions registrations passwords], controllers: { confirmations: 'users/confirmations' }
-  get 'my', to: 'users#show'
+  get '/my', to: 'users#show'
   devise_scope :user do
     get 'register/1', to: 'users/registrations#new', as: :new_user_registration
     get 'register/2', to: 'users/registrations#show'
