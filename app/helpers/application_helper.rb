@@ -28,4 +28,12 @@ module ApplicationHelper
   def favorite_text(job)
     FavoriteJob.find_by(job: job, user: current_user).present? ? 'Unfavorite' : 'Favorite'
   end
+
+  def cities_for_select
+    City.all.map { |city| [city.name, city.id] }
+  end
+
+  def industries_for_select
+    Industry.all.map { |industry| [industry.name, industry.id]}
+  end
 end

@@ -1,0 +1,18 @@
+.d-flex.justify-content-center
+  = paginate @applied_jobs, window: 1
+- @applied_jobs.each do |applied_job|
+  .row.bg-white
+    .col-11.p-3.align-self-center
+      h5.mb-1
+        = link_to applied_job.job.title, detail_path(applied_job.job.slug)
+      p.mb-1
+        = link_to applied_job.name, my_path(user_id: applied_job.user_id)
+      p.mb-1
+        = applied_job.email
+      p.mb-1.text-end
+        | Applied at: 
+        = format_datetime(applied_job.created_at)
+.d-flex.justify-content-center.p-2
+  = page_entries_info @applied_jobs
+.d-flex.justify-content-center
+  = paginate @applied_jobs, window: 1

@@ -1,0 +1,24 @@
+- provide :title, 'Applies Jobs'
+h2.p-3.text-center
+  | APPLIED JOBS 
+.form-apply
+  = form_with(url: admin_applies_path, method: :get, local: true) do |f|
+    .row.p-2
+      = f.label :email, class:"col-sm-1"
+      .col-sm-10
+        = f.email_field :email, class: 'form-control'
+    .row.p-2
+      .col
+        = f.select :city_id, cities_for_select, { prompt: 'Select a City' }, { class: 'form-control col-sm-10' }
+      .col
+        = f.select :industry_id, industries_for_select, { prompt: 'Select a Industry' }, { class: 'form-control' }
+    .row.p-2
+      .col
+        = f.date_field :start_date, class: 'form-control'
+      .col
+        = f.date_field :end_date, class: 'form-control'
+    .span.p-3.text-center
+      = f.submit "Search", class: "btn btn-primary btn-space"
+      = link_to "Download CSV", export_csv_path(format: :csv), class: "btn btn-primary btn-space"
+
+= render 'result_search'

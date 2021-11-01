@@ -13,8 +13,8 @@ Rails.application.routes.draw do
   delete 'unfavorite', to: 'favorite_jobs#destroy'
   get 'history', to: 'history_jobs#index', as: 'history'
   get '/my/jobs', to: 'apply_jobs#index', as: 'applied_job'
-  devise_for :users, skip: %i[sessions registrations passwords], controllers: { confirmations: 'users/confirmations' }
-  get '/my', to: 'users#show'
+  devise_for :users, path: 'users', skip: %i[sessions registrations passwords], controllers: { confirmations: 'users/confirmations' }
+  get 'my', to: 'users#show'
   devise_scope :user do
     get 'register/1', to: 'users/registrations#new', as: :new_user_registration
     get 'register/2', to: 'users/registrations#show'
@@ -29,4 +29,12 @@ Rails.application.routes.draw do
     post 'login', to: 'users/sessions#create', as: :user_session
     delete 'logout', to: 'users/sessions#destroy', as: :destroy_user_session, via: Devise.mappings[:user].sign_out_via
   end
+  get 'admin/applies', to: 'admins#index', as: 'admin_applies'
+  devise_for :admins, path: 'admins', skip: :sessions
+  devise_scope :admin do
+    get 'admin/login', to: 'admins/sessions#new', as: :new_admin_session
+    post 'admin/login', to: 'admins/sessions#create', as: :admin_session
+    delete 'admin/logout', to: 'admins/sessions#destroy', as: :destroy_admin_session, via: Devise.mappings[:admin].sign_out_via
+  end
+  get 'admin/export', to: 'admins#export', as: 'export_csv'
 end
