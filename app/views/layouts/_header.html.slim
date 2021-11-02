@@ -1,7 +1,10 @@
 header
   nav.navbar.navbar-expand-lg.navbar-light.bg-dark
     .container-fluid
-      = link_to (image_tag "logo.png", alt: "logo"), root_path, id: "logo"
+      - if current_admin
+        = image_tag "logo.png", alt: "logo", id: "logo" 
+      - else
+        = link_to (image_tag "logo.png", alt: "logo"), root_path, id: "logo" 
       #navbarExample01.collapse.navbar-collapse
         ul.navbar-nav.ms-auto.mb-2.mb-lg-0
           - if user_signed_in?
@@ -13,9 +16,12 @@ header
               = link_to "History", history_path
             li
               = link_to('Logout', destroy_user_session_path, method: :delete)
-          - else
+          - elsif !admin_signed_in?
             li
               = link_to('Login', new_user_session_path)
             li.nav-item
               = link_to "Register", new_user_registration_path
-          
+
+          - if admin_signed_in?
+            li
+              = link_to('Logout', destroy_admin_session_path, method: :delete)
