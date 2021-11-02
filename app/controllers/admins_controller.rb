@@ -12,7 +12,7 @@ class AdminsController < ApplicationController
   end
 
   def export
-    apply_job = ApplyJob.find(session[:apply_job_id])
+    apply_job = ApplyJob.find(session[:apply_job_ids])
     csv = ExportCsvService.new(apply_job, Admin::CSV_ATTRIBUTES)
     respond_to do |format|
       format.html
