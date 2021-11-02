@@ -13,7 +13,7 @@ class AppliedQuery
     elsif params[:start_date].present?
       @applied_jobs.where('apply_jobs.created_at >= ?', params[:start_date].to_date.beginning_of_day)
     elsif params[:end_date].present?
-      @applied_jobs.where('apply_jobs.created_at =< ?', params[:end_date].to_date.end_of_day)
+      @applied_jobs.where('apply_jobs.created_at <= ?', params[:end_date].to_date.end_of_day)
     else
       @applied_jobs
     end
