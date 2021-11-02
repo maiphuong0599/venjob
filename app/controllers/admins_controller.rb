@@ -2,13 +2,13 @@ class AdminsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    session[:apply_job_id] = nil
+    session.delete(:apply_job_ids) if session[:apply_job_ids].present?
     hash_condition = { email: params[:email],
                        cities: { id: params[:city_id] },
                        industries: { id: params[:industry_id] } }
     remove_blank_value = deep_compact(hash_condition)
     @applied_jobs = applied_jobs_query.query_date(apply_params).where(remove_blank_value).page(params[:page])
-    session[:apply_job_id] = @applied_jobs.map(&:id)
+    session[:apply_job_ids] = @applied_jobs.map(&:id)
   end
 
   def export
