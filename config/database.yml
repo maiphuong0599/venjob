@@ -19,4 +19,6 @@ development:
 
 production:
   <<: *default
+  username: root
+  password: lalili1005
   database: VeNJOB_production

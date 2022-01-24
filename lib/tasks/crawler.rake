@@ -31,6 +31,7 @@ namespace :crawler do
 
         logger.info("Link company: #{company_page}")
 
+        company_image = company.css('div.company-info div.info img').attribute('src').text
         company_info = company.css('div.company-info div.content')
         address = company_info.css('p')[1].try(:text)
         description = company_info.css('ul li').text
@@ -49,7 +50,10 @@ namespace :crawler do
         parse_job_detail_page = Nokogiri::HTML(URI.open(job_detail_page))
         detail_job = parse_job_detail_page.css('div.container')
         title = detail_job.css('div.job-desc h1.title')
-        next if title.nil?
+        next if title.nil? || title.text.blank?
+
+        # || experience.nil? || experience.text.blank? || salary.nil? ||
+        #         salary.text.blank? || type.nil? || type.text.blank? || level.nil? || level.text.blank?
 
         logger.info("Link job: #{job_detail_page}")
 
@@ -95,7 +99,8 @@ namespace :crawler do
           overview: overview,
           requirement: requirement,
           other_requirement: other_requirement,
-          company_id: Company.find_by(name: company_name.text).id
+          company_id: Company.find_by(name: company_name.text).id,
+          image_url: company_image
         )
 
         job_industries = []

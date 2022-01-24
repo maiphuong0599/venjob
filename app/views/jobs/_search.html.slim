@@ -1,4 +1,8 @@
-.search.p-3.offset-md-2
-  = form_with(url: '/jobs', method: 'get', local: true) do 
-    = text_field_tag :search, params[:search], placeholder: "Search", class: "form"
-    = submit_tag "Search", name: nil, class: 'btn-primary'
+.searchBar.position-relative
+  .input-group
+    .field.has-addons
+      = form_with(url: '/jobs', method: 'get', local: true) do
+        
+        i.bi.bi-search
+        = text_field_tag :search, params[:search], placeholder: "Search" , class: 'input-searchBar'
+        = submit_tag "Search", name: nil, class: 'btn-search'

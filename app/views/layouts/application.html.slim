@@ -10,9 +10,9 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     link[rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"]
-  body.bg-light
+  body
     = render 'layouts/header'
-    .container
+    .container-fluid
       - flash.each do |key, value|
         = content_tag(:div, value, class: "alert alert-#{key}")
       = yield

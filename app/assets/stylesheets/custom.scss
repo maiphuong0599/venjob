@@ -1,6 +1,7 @@
 @import "bootstrap";
 @import "colors";
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css");
+// @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
 
 #logo {
   float: left;
@@ -9,10 +10,29 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
+// html, body {
+//   font-size: 14px;
+// }
+
 body {
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 14px;
+  // font-size: 1rem;
+  // font-weight: 400;
+  // line-height: 1.5;
+  // color: #333;
+  // background-color: #fff;
+  // -webkit-text-size-adjust: 100%;
+  // -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   position: relative;
   padding-bottom: 228px;
   min-height: 100vh;
+}
+
+.navbar {
+  height: 60px;
+  transition: all 0.3s ease 0s;
 }
 
 footer {
@@ -22,29 +42,34 @@ footer {
 }
 
 .navbar ul li a {
-  color: #fff;
+  color: white;
   font-size: 18px;
+  text-align: center;
   font-weight: bold;
-  padding: 4px 15px;
   text-decoration: none;
   &:hover {
-    color: rgb(107, 107, 107);
+    color: rgb(236, 236, 236);
     text-decoration: none;
   }
 }
 
-.container p {
-  font-weight: 400;
-  font-size: medium;
-  text-align: justify;
-  }
-  a {
-    color: rgb(14, 14, 14);
-    text-decoration: none;
-    &:hover {
-      color: orange;
-  }
+.container-fluid {
+  padding: 0;
+  margin: 0;
 }
+// .container p {
+//   font-size: 15px;
+//   text-align: justify;
+//   line-height: 1.4;
+//   }
+//   a {
+//     color: black;
+//     font-size: 16px;
+//     text-decoration: none;
+//     &:hover {
+//       color: orange;
+//   }
+// }
 
 .more {
   color: rgb(52, 119, 219);
@@ -54,12 +79,13 @@ footer {
 }
 
 .form {
-  width: 700px
+  width: 700px;
 }
 
 .card-body {
   float: left;
 }
+
 .favourite {
   float: right;
   .btn {
@@ -95,7 +121,7 @@ footer {
 }
 
 .progressbar li:before {
-  content : counter(step);
+  content: counter(step);
   counter-increment: step;
   width: 40px;
   height: 40px;
@@ -109,7 +135,7 @@ footer {
 }
 
 .progressbar li:after {
-  content : '';
+  content: '';
   position:absolute;
   width: 100%;
   height: 3px;
@@ -137,9 +163,200 @@ footer {
 }
 
 // form
+.btn-orange-1 {
+  height: 42px;
+  width: 110px;
+  background-color: #F7941D;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  // cursor: pointer;
+  transition: background-color 0.3s;
+  letter-spacing: 0.05em;
+}
+.btn-orange-1:hover {
+  background-color: #df8313;
+  transition: background-color 0.3s;
+  outline: none;
+  border: none;
+}
+
+.btn-orange-2 {
+  height: 42px;
+  width: 110px;
+  border: 2px solid #F7941D;
+  // cursor: pointer;
+  background-color: transparent;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  letter-spacing: 0.05em;
+}
+.btn-orange-2:hover {
+  background-color: #df8313;
+  transition: background-color 0.3s;
+  outline: none;
+}
 
 .btn-space {
   margin-right: 10px;
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.15)), url("https://images.vietnamworks.com/logo/2560x900-Ne1_118099.jpg");
+  background-size: cover;
+  height: 35.15625vw;
+  width: auto;
+  h1 {
+    color: white;
+    font-size: 36px;
+    font-weight: 300;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
+    text-align: center;
+  }
+  .searchBar {
+    .input-group {
+      background-color: transparent;
+      border-radius: 5px;
+      border: 14px solid rgba(0,0,0,0.35);
+      // display: flex;
+      // align-items: center;
+      // justify-content: center;
+      
+      .field.has-addons {
+        display: flex;
+        justify-content: flex-start;
+        form {
+          background-color: white;
+          position: relative;
+          display: flex;
+          width: 100%;
+          align-items: center;
+          border-radius: 4px;
+          input#search.input-searchBar {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding-left: 5px;
+            color: #555555;
+            font-size: 14px;
+            max-width: 100%;
+            width: 100%;
+            // border: none;
+            // outline: none;
+            // font-size: 14px;
+            // color: #555555;
+            padding: 10px;
+            padding-left: 40px;
+          }
+          .bi-search { 
+            color: black;
+            position: absolute;
+            font-size: 20px;
+            // // top: 11px;
+            left: 10px;
+            cursor: pointer;
+            z-index: 1;
+            align-items: center;
+            display: inline-flex;
+            justify-content: center;
+          } 
+          input.btn-search {
+            height: 100%;
+            text-align: center;
+            background-color: #F7941D;
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s;
+            letter-spacing: 0.05em;
+          }
+          input.btn-search:hover {
+            background-color: #df8313;
+            transition: background-color 0.3s;
+            outline: none;
+          }
+        } 
+      }
+    }
+  } 
+}
+
+.container.top-page {
+  h4 {
+    padding-top: 50px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .job-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 15px 15px 20px;
+    .img-job {
+      display: flex;
+      justify-content: center!important;
+      align-items: center!important;
+      width: 100%;
+      height: 100%;
+      padding: 5px;
+      border: 1px solid #ddd;
+      img {
+        width: 100%;
+        height: 100%;
+        height: auto;
+        vertical-align: middle;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+    p {
+      color: #5d677a;
+      font-size: 14px;
+      text-align: justify;
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+    a{
+      font-size: 17px;
+      color: black;
+      font-weight: 700;
+      text-decoration: none;
+      text-align: left;
+      &:hover {
+        color: orange;
+      }
+    }
+  }
+  .city-list, .industry-list {
+    .city li, .industry li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      a {
+        color: black;
+        text-decoration: none;
+        &:hover {
+          color: orange;
+        }
+      }
+      span {
+        color: orange;
+      }
+    }
+  }
+  .more-items {
+    margin-top: 20px;
+    a {
+      font-size: 17px;
+      color: black;
+      text-decoration: none;
+      &:hover {
+        color: orange;
+      }
+    }
+  }
 }
 
 .form-apply label {
