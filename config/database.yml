@@ -21,4 +21,4 @@ production:
   <<: *default
   username: root
   password: lalili1005
-  database: VeNJOB_production
+  database: heroku_018ed42592cae3e
