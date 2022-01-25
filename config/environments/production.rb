@@ -43,16 +43,16 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.default_url_options = { host: 'venjob-recruitment.herokuapp.com', protocol: 'https' }
-  # config.action_mailer.smtp_settings = {
-  #   address: 'smtp.gmail.com',
-  #   port: 587,
-  #   domain: 'herokuapp.com',
-  #   user_name: Rails.application.credentials.dig(:google_smtp, :email),
-  #   password: Rails.application.credentials.dig(:google_smtp, :password),
-  #   authentication: 'plain',
-  #   enable_starttls_auto: true
-  # }
+  config.action_mailer.default_url_options = { host: 'venjob-recruitment.herokuapp.com', protocol: 'https' }
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'herokuapp.com',
+    user_name: Rails.application.credentials.dig(:google_smtp, :email),
+    password: Rails.application.credentials.dig(:google_smtp, :password),
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil

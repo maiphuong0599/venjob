@@ -49,8 +49,6 @@ GEM
     activerecord (6.1.4)
       activemodel (= 6.1.4)
       activesupport (= 6.1.4)
-    activerecord-mysql2-adapter (0.0.3)
-      mysql2
     activestorage (6.1.4)
       actionpack (= 6.1.4)
       activejob (= 6.1.4)
@@ -282,7 +280,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_storage_validations
-  activerecord-mysql2-adapter
   babosa
   bootsnap (>= 1.4.4)
   bootstrap (~> 5.0.1)
@@ -295,7 +292,7 @@ DEPENDENCIES
   kaminari (~> 1.2, >= 1.2.1)
   listen (~> 3.3)
   mini_magick (>= 4.9.5)
-  mysql2 (~> 0.5.3)
+  mysql2
   nokogiri (~> 1.11, >= 1.11.7)
   pg (= 1.1.4)
   puma (~> 5.0)
