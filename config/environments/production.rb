@@ -43,7 +43,7 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: "us-cdbr-east-05.cleardb.net" , protocol: "https"} 
+  config.action_mailer.default_url_options = { host: "venjob-recruitment.herokuapp.com" , protocol: "https"} 
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,
