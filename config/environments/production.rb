@@ -43,11 +43,11 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: "localhost:3000" , protocol: "http"} 
+  config.action_mailer.default_url_options = { host: "us-cdbr-east-05.cleardb.net" , protocol: "https"} 
   config.action_mailer.smtp_settings = {
     address:              'smtp.gmail.com',
     port:                 587,
-    domain:               'localhost:3000',
+    domain:               'us-cdbr-east-05.cleardb.net',
     user_name:            Rails.application.credentials.dig(:google_smtp, :email),
     password:             Rails.application.credentials.dig(:google_smtp, :password),
     authentication:       'plain',
