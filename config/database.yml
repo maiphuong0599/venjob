@@ -21,5 +21,4 @@ production:
   <<: *default
   username: b7ae37ddb325d6
   password: aec462f3
-  
   database: heroku_018ed42592cae3e
