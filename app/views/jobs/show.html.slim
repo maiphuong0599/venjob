@@ -1,54 +1,55 @@
 - provide :title, 'Job Detail'
 
-= render 'breadcrumb'
-.row.bg-white
-  .col-10.p-3.detail-job.text-dark
-    h1.mb-2
-      = @job.title
-    h3.mb-2
-      = @job.company.name
-    .row
-      .col
-        p.mb-2
-          | Lương: 
-          = @job.salary
-        p.mb-2
-          | Location: 
-          - @job.cities.each do |city|
-            = link_to city.name + ' | ', city_slug_path(city.slug)
-        p.mb-2
-          | Job type:  
-          = @job.job_type
-      .col
-        p.mb-2
-          | Level: 
-          = @job.level
-        p.mb-2
-          | Experience: 
-          = @job.experience
-        p.mb-2
-          | Expired at: 
-          = format_datetime(@job.expired_at)
-    h5.my-3
-      | Benefits
-    p.mb-2
-      = @job.benefits
-    h5.my-3
-      | Overview
-    p.mb-2
-      - @job.overview
-    h5.my-3
-      | Requirement 
-    p.mb-2
-      = @job.requirement
-    h5.my-3
-      | Other requirement 
-    p.mb-2
-      = @job.other_requirement
-  .col-sm-2.p-3.apply-job
-    = link_to "Apply this Job", apply_path(job_id: @job.id), class: "btn btn-outline-primary btn-lg"
-.row.bg-white.p-4
-  .col.text-end
-    = link_to "Apply this Job", apply_path(job_id: @job.id), class: "btn btn-outline-primary btn-lg"
-  .col.text-start 
-    = render partial: "favorite_jobs/favorite", locals: { job: @job }
+.container
+  = render 'breadcrumb'
+  .row
+    .col-10.p-3.detail-job.text-dark
+      h1.mb-2
+        = @job.title
+      h3.mb-2
+        = @job.company.name
+      .row.p-1
+        .col
+          p.mb-2
+            | Lương: 
+            = @job.salary
+          p.mb-2
+            | Location: 
+            - @job.cities.each do |city|
+              = link_to city.name + ' | ', city_slug_path(city.slug)
+          p.mb-2
+            | Job type:  
+            = @job.job_type
+        .col
+          p.mb-2
+            | Level: 
+            = @job.level
+          p.mb-2
+            | Experience: 
+            = @job.experience
+          p.mb-2
+            | Expired at: 
+            = format_datetime(@job.expired_at)
+      h5.my-3
+        | Benefits
+      p.mb-2
+        = @job.benefits
+      h5.my-3
+        | Overview
+      p.mb-2
+        - @job.overview
+      h5.my-3
+        | Requirement 
+      p.mb-2
+        = @job.requirement
+      h5.my-3
+        | Other requirement 
+      p.mb-2
+        = @job.other_requirement
+    .col-sm-2.p-3.apply-job
+      = link_to "Apply this Job", apply_path(job_id: @job.id), class: "btn btn-outline-primary btn-lg"
+  .row.bg-white.p-4
+    .col.text-end
+      = link_to "Apply this Job", apply_path(job_id: @job.id), class: "btn btn-outline-primary btn-lg"
+    .col.text-start 
+      = render partial: "favorite_jobs/favorite", locals: { job: @job }

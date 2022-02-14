@@ -1,14 +1,13 @@
 - provide :title, 'Reconfirm Email'
 
-.row.p-3
-  .col-md-6.offset-md-3.form-apply
-    = form_for(resource, as: resource_name) do |f|
-      = render 'shared/error_messages', object: resource
-      .card
-        .card-body
-          .field
-            = f.label :email
-            br
-            = f.email_field :email, autofocus: true, disabled: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'form-control'
-          .actions.p-3.text-center
-             = link_to "Back to Login", new_user_session_path, class: "btn btn-primary"
+.col-md-6.offset-md-3.form-apply
+  = form_for(resource, as: resource_name) do |f|
+    = render 'shared/error_messages', object: resource
+    .card
+      .card-body
+        .field
+          = f.label :email
+          br
+          = f.email_field :email, autofocus: true, disabled: true, autocomplete: "email", value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), class: 'form-control'
+        .actions.p-3.text-center
+            = link_to "Back to Login", new_user_session_path, class: "btn btn-primary"

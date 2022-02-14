@@ -1,31 +1,30 @@
 - provide :title, 'Applied Job'
-
-h3.p-3.text-center
-  | Applied Jobs
-.d-flex.justify-content-center
-  = paginate @applied_jobs, window: 1
-- @applied_jobs.each do |applied_job|
-    .bg-white.card.p-2
-      .p-3.align-self-center
-        h5.mb-1
-          = link_to applied_job.job.title, detail_path(applied_job.job.slug)
-        p.mb-1
-          i.fas.fa-dollar-sign.m-1
-          | Lương: 
-          = applied_job.job.salary
-        p.mb-1
-          i.fas.fa-map-marker-alt.m-1
-          = applied_job.job.cities.map(&:name).uniq.join(' | ')
-        p.mb-1
-          = truncate(applied_job.job.overview, length: 250)
-        p.mb-1.text-end
-          | Applied at: 
-          = format_datetime(applied_job.created_at)
--if @applied_jobs.any?
-  .d-flex.justify-content-center.p-2
-    = page_entries_info @applied_jobs
+.container
+  h3.p-3.text-center
+    | Applied Jobs
   .d-flex.justify-content-center
     = paginate @applied_jobs, window: 1
--else
-  h4.text-center
-    | You haven't any applied jobs
+  - @applied_jobs.each do |applied_job|
+    .p-3.align-self-center
+      h5.mb-1
+        = link_to applied_job.job.title, detail_path(applied_job.job.slug)
+      p.mb-1
+        i.fas.fa-dollar-sign.m-1
+        | Lương: 
+        = applied_job.job.salary
+      p.mb-1
+        i.fas.fa-map-marker-alt.m-1
+        = applied_job.job.cities.map(&:name).uniq.join(' | ')
+      p.mb-1
+        = truncate(applied_job.job.overview, length: 250)
+      p.mb-1.text-end
+        | Applied at: 
+        = format_datetime(applied_job.created_at)
+  -if @applied_jobs.any?
+    .d-flex.justify-content-center.p-2
+      = page_entries_info @applied_jobs
+    .d-flex.justify-content-center
+      = paginate @applied_jobs, window: 1
+  -else
+    h4.text-center
+      | You haven't any applied jobs

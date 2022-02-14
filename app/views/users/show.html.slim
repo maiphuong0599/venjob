@@ -2,24 +2,23 @@
 
 h2.p-3.text-center
   | My Page
-.row
-  .col-md-6.offset-md-3.form-apply
-    = form_with(scope: :user, local:true) do |f|
-      .card
-        .card-body
-          .field
-            = f.label :email
+.col-md-6.offset-md-3.form-apply
+  = form_with(scope: :user, local:true) do |f|
+    .card
+      .card-body
+        .field
+          = f.label :email
+          br
+          = f.email_field :email, readonly: true, class: 'form-control'
+        .field
+          = f.label :name, "Full Name"
+          br
+          = f.text_field :name, readonly: true, class: 'form-control'
+        .field
+          -if @user.cv.attached?
+            = f.label :cv, "CV" 
             br
-            = f.email_field :email, readonly: true, class: 'form-control'
-          .field
-            = f.label :name, "Full Name"
-            br
-            = f.text_field :name, readonly: true, class: 'form-control'
-          .field
-            -if @user.cv.attached?
-              = f.label :cv, "CV" 
-              br
-              = link_to @user.cv.filename, rails_blob_path(@user.cv, disposition: 'attachment')
-          .span.p-2.text-center
-            = link_to "Update", edit_user_registration_path, class: "btn btn-primary btn-space"
-            = link_to "My Jobs", applied_job_path, class: "btn btn-primary btn-space"
+            = link_to @user.cv.filename, rails_blob_path(@user.cv, disposition: 'attachment')
+        .span.p-2.text-center
+          = link_to "Update", edit_user_registration_path, class: "btn btn-primary btn-space"
+          = link_to "My Jobs", applied_job_path, class: "btn btn-primary btn-space"

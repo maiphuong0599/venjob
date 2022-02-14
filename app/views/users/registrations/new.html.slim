@@ -2,36 +2,35 @@
 
 h2.p-3.text-center
   | Register
-.row
-  .col-md-6.offset-md-3.form-apply
-    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-      = render 'shared/error_messages', object: resource
-      .card
-        .card-body
-          .field
-            = f.label :name, "Full Name"
-            br
-            = f.text_field :name, required: true, autofocus: true, length: { maximum: 200 }, class: 'form-control'
-          .field
-            = f.label :email
-            br
-            = f.email_field :email, required: true, length: { maximum: 200 }, autocomplete: "email", class: 'form-control'
-          .field
-            = f.label :password
-            - if @minimum_password_length
-              em
-                | (
-                = @minimum_password_length
-                |  characters minimum)
-            br
-            = f.password_field :password, required: true, autocomplete: "new-password", class: 'form-control'
-          .field
-            = f.label :password_confirmation
-            br
-            = f.password_field :password_confirmation, required: true, autocomplete: "new-password", class: 'form-control'
-          .field
-            = f.label :cv, "CV"
-            br
-            = f.file_field :cv, accept: 'application/pdf', size: { less_than: 5.megabytes, message:"should be less than 5MB" }
-          .actions.p-3.text-center
-            = f.submit "Sign up", class: "btn btn-primary"
+.col-md-6.offset-md-3.form-apply
+  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = render 'shared/error_messages', object: resource
+    .card
+      .card-body
+        .field
+          = f.label :name, "Full Name"
+          br
+          = f.text_field :name, required: true, autofocus: true, length: { maximum: 200 }, class: 'form-control'
+        .field
+          = f.label :email
+          br
+          = f.email_field :email, required: true, length: { maximum: 200 }, autocomplete: "email", class: 'form-control'
+        .field
+          = f.label :password
+          - if @minimum_password_length
+            em
+              | (
+              = @minimum_password_length
+              |  characters minimum)
+          br
+          = f.password_field :password, required: true, autocomplete: "new-password", class: 'form-control'
+        .field
+          = f.label :password_confirmation
+          br
+          = f.password_field :password_confirmation, required: true, autocomplete: "new-password", class: 'form-control'
+        .field
+          = f.label :cv, "CV"
+          br
+          = f.file_field :cv, accept: 'application/pdf', size: { less_than: 5.megabytes, message:"should be less than 5MB" }
+        .actions.p-3.text-center
+          = f.submit "Sign up", class: "btn btn-primary"
