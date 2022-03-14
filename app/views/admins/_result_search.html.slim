@@ -1,7 +1,7 @@
 .d-flex.justify-content-center
   = paginate @applied_jobs, window: 1
 - @applied_jobs.each do |applied_job|
-  .row.bg-white
+  .bg-white
     .col-11.p-3.align-self-center
       h5.mb-1
         = link_to applied_job.job.title, detail_path(applied_job.job.slug)
